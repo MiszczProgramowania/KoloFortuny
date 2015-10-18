@@ -14,6 +14,9 @@ class OknoGlowne : public QMainWindow
 public:
     explicit OknoGlowne(QWidget *parent = 0);
     ~OknoGlowne();
+    QString sciezka_do_pliku;
+private slots:
+    void on_actionWczytaj_triggered();
 
 private:
     Ui::OknoGlowne *ui;
