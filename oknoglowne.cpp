@@ -17,72 +17,30 @@ OknoGlowne::~OknoGlowne()
 {
     delete ui;
 }
-QString OknoGlowne::zapis_do_pliku(QString sciezka)
-{
-    QFile plik(sciezka);
-    QString tekst=NULL;
 
-    if(!plik.open(QFile::WriteOnly | QFile::Text))
-    {
-        qDebug() << "Nie można było otworzyć pliku o zapisu\n";
-        return tekst;
-    }
-
-    QTextStream out (&plik);
-    out << tekst;
-
-    qDebug() << "Wczytano Następujące Dane z Pliku:\n";
-    qDebug() << tekst << "\n";
-
-    plik.flush();
-    plik.close();
-
-    return tekst;
-}
-QString OknoGlowne::odczyt_z_pliku(QString sciezka)
-{
-    QFile plik(sciezka);
-    QString tekst=NULL;
-
-    if(!plik.open(QFile::ReadOnly | QFile::Text))
-    {
-        qDebug() << "Nie można było otworzyc pliku do odczytu\n";
-        return tekst;
-    }
-
-    QTextStream in (&plik);
-    tekst = in.readAll();
-
-    qDebug() << "Wczytano Następujące Dane z Pliku:\n";
-    qDebug() << tekst << "\n";
-
-    plik.flush();
-    plik.close();
-
-    return tekst;
-}
 void OknoGlowne::on_actionWczytaj_triggered()
 {
-    sciezka_do_pliku = QFileDialog::getOpenFileName(
+    plik_hasel.sciezka = QFileDialog::getOpenFileName(
                 this, //ten plik
                 tr("Otwórz plik"), //tytuł okna
-                QString(), //ścieżka do pliku (opcjonalna)
+                QString(), //ścieżka do pliku (opcjonalna w tym momencie funkcja generująca NULL)
                 "Plik Tekstowy(*.txt);;Wszystkie(*.*)"); //to czego szukamy w formularzu
 
-    QString tekst = OknoGlowne::odczyt_z_pliku(sciezka_do_pliku);
+    QString tekst = plik_hasel.odczyt_z_pliku();
 
     if (tekst==NULL)
     {
-        QMessageBox::warning(
-                    this,
-                    tr("Błąd"),
-                    "Wystąpił błąd w dostępie do pliku"
-                    );
+//                QMessageBox::warning(
+//                            this,
+//                            tr("Błąd"),
+//                            "Wystąpił błąd w dostępie do pliku"
+//                            );
+       qDebug() << "Plik pusty lub otwarcie nie udane!!";
     }
     else
     {
         QString informacja = "Hasła zaczytane z pliku o ścieżce: \n";
-        informacja.append(sciezka_do_pliku);
+        informacja.append(plik_hasel.sciezka);
         QMessageBox::information(
                     this,
                     tr("Hasła zaczytane"),

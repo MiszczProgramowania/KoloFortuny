@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        oknoglowne.cpp
+        oknoglowne.cpp \
+    plik.cpp
 
-HEADERS  += oknoglowne.h
+HEADERS  += oknoglowne.h \
+    plik.h
 
 FORMS    += oknoglowne.ui
