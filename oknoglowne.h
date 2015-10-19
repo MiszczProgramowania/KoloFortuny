@@ -17,8 +17,6 @@ public:
 
     explicit OknoGlowne(QWidget *parent = 0);
     ~OknoGlowne();
-    QString zapis_do_pliku(QString sciezka);
-    QString odczyt_z_pliku(QString sciezka);
 private slots:
     void on_actionWczytaj_triggered();
 
