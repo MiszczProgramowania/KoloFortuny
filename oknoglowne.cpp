@@ -20,6 +20,7 @@ OknoGlowne::~OknoGlowne()
 
 void OknoGlowne::on_actionWczytaj_triggered()
 {
+    qDebug() << "[OknoGlowne::on_actionWczytaj_triggered()]";
     plik_hasel.sciezka = QFileDialog::getOpenFileName(
                 this, //ten plik
                 tr("Otwórz plik"), //tytuł okna
@@ -27,7 +28,7 @@ void OknoGlowne::on_actionWczytaj_triggered()
                 "Plik Tekstowy(*.txt);;Wszystkie(*.*)"); //to czego szukamy w formularzu
 
     plik_hasel.tekst = plik_hasel.odczyt_z_pliku();
-    plik_hasel.baza = plik_hasel.odczyt_hasel();
+    plik_hasel.baza = plik_hasel.tekst_na_baze();
 
     if (plik_hasel.tekst==""||plik_hasel.tekst==NULL)
     {
@@ -49,4 +50,14 @@ void OknoGlowne::on_actionWczytaj_triggered()
                     informacja
                     );
     }
+}
+
+void OknoGlowne::on_actionNowa_triggered()
+{
+    qDebug() << "[OknoGlowne::on_actionNowa_triggered()]";
+    if(plik_hasel.baza.isEmpty())
+        qDebug() << "brak bazy";
+    else
+        qDebug() << "baza istnieje";
+
 }
