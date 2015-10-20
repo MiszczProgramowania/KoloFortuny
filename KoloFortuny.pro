@@ -14,9 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         oknoglowne.cpp \
-    plik.cpp
+    plik.cpp \
+    bazahasel.cpp
 
 HEADERS  += oknoglowne.h \
-    plik.h
+    plik.h \
+    bazahasel.h
 
 FORMS    += oknoglowne.ui
+
+DISTFILES += \
+    readme.txt

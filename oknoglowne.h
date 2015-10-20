@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "plik.h"
+#include "bazahasel.h"
 
 namespace Ui {
 class OknoGlowne;
@@ -12,7 +13,7 @@ class OknoGlowne : public QMainWindow
 {
     Q_OBJECT
 private:
-    Plik plik_hasel;
+    BazaHasel plik_hasel;
 public:
 
     explicit OknoGlowne(QWidget *parent = 0);

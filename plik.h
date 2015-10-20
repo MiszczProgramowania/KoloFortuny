@@ -9,11 +9,9 @@
 class Plik
 {
 
-private:
-
 public:
-
     QString sciezka;
+    QString tekst;
     QString zapis_do_pliku();
     QString odczyt_z_pliku();
 
