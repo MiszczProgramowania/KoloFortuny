@@ -6,9 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>402</width>
+    <height>261</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>402</width>
+    <height>261</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>402</width>
+    <height>261</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>402</width>
+    <height>261</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>OknoGlowne</string>
@@ -23,14 +41,26 @@
       <height>101</height>
      </rect>
     </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="showDropIndicator" stdset="0">
+     <bool>false</bool>
+    </property>
+    <property name="dragDropOverwriteMode">
+     <bool>false</bool>
+    </property>
+    <property name="columnCount">
+     <number>18</number>
+    </property>
     <attribute name="horizontalHeaderVisible">
      <bool>false</bool>
     </attribute>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>20</number>
+     <number>21</number>
     </attribute>
     <attribute name="horizontalHeaderMinimumSectionSize">
-     <number>20</number>
+     <number>21</number>
     </attribute>
     <attribute name="verticalHeaderVisible">
      <bool>false</bool>
@@ -41,6 +71,24 @@
     <attribute name="verticalHeaderMinimumSectionSize">
      <number>20</number>
     </attribute>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -48,7 +96,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>402</width>
      <height>21</height>
     </rect>
    </property>

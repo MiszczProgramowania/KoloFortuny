@@ -21,7 +21,6 @@ public:
 private slots:
     void on_actionWczytaj_triggered();
 
-
     void on_actionNowa_triggered();
 
 private:
