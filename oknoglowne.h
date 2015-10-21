@@ -17,6 +17,8 @@ private:
     Konfiguracja plik_conf;
     BazaHasel plik_hasel;
 
+    int losowanie_partii();
+    void inicjalizacja_partii(QString temp);
 public:
 
     explicit OknoGlowne(QWidget *parent = 0);

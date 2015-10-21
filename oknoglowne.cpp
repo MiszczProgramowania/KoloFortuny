@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <Qtime>
 
 OknoGlowne::OknoGlowne(QWidget *parent) :
     QMainWindow(parent),
@@ -69,7 +70,25 @@ void OknoGlowne::on_actionNowa_triggered()
         return;
     }
     qDebug() << "Baza Istnieje";
-    QString temp = plik_hasel.baza.at(0);
+
+    int los = losowanie_partii();
+
+    OknoGlowne::inicjalizacja_partii(plik_hasel.baza.at(los));
+
+}
+int OknoGlowne::losowanie_partii()
+{
+    QTime czas;
+    czas = czas.currentTime();
+    int milisekunda=czas.msec();
+
+    int los = milisekunda % plik_hasel.baza.count();
+    qDebug() << "czas wynosi: "<< milisekunda << "Wylosowałeś hasło numer: " << los;
+    return los;
+}
+
+void OknoGlowne::inicjalizacja_partii(QString temp)
+{
     qDebug() << "Rozmiar stringa: " << temp.length();
     int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount();
     if (temp.length()%ui->TablicaLiter->columnCount())
