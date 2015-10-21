@@ -3,17 +3,14 @@
 
 
 
-QString Plik::zapis_do_pliku()
+void Plik::zapis_do_pliku()
 {
     qDebug() << "[Plik::zapis_do_pliku()]";
     QFile plik(sciezka);
-    tekst="";
-
     if(!plik.open(QFile::WriteOnly | QFile::Text))
     {
         qDebug() << "Nie można było otworzyć pliku o zapisu\n";
-
-        return tekst;
+        return;
     }
 
     QTextStream out (&plik);
@@ -25,7 +22,7 @@ QString Plik::zapis_do_pliku()
     plik.flush();
     plik.close();
 
-    return tekst;
+    return;
 }
 QString Plik::odczyt_z_pliku()
 {
@@ -55,4 +52,16 @@ QString Plik::odczyt_z_pliku()
     plik.close();
 
     return tekst;
+}
+QString Plik::wycinanie_szukanego_tekstu(QString szukana)
+{
+    qDebug() << "[Plik::przeszukiwanie(QString szukana)]";
+
+    int temp_start;
+    szukana=szukana+"=";
+    temp_start= tekst.lastIndexOf(szukana);
+    qDebug() << "Tniemy!!";
+    QString temp = tekst.mid(temp_start,szukana.length());
+    qDebug() << temp;
+    return temp;
 }

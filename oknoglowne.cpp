@@ -18,6 +18,7 @@ OknoGlowne::OknoGlowne(QWidget *parent) :
 OknoGlowne::~OknoGlowne()
 {
     delete ui;
+
 }
 
 void OknoGlowne::on_actionWczytaj_triggered()
@@ -29,16 +30,22 @@ void OknoGlowne::on_actionWczytaj_triggered()
                 QString(), //ścieżka do pliku (opcjonalna w tym momencie funkcja generująca NULL)
                 "Plik Tekstowy(*.txt);;Wszystkie(*.*)"); //to czego szukamy w formularzu
 
-    plik_hasel.tekst = plik_hasel.odczyt_z_pliku();
-    plik_hasel.baza = plik_hasel.tekst_na_baze();
+    plik_conf.ustaw_sciezke_do_hasel(plik_hasel.sciezka);
 
-    if (plik_hasel.tekst==""||plik_hasel.tekst==NULL)
+}
+
+
+void OknoGlowne::on_actionNowa_triggered()
+{
+    qDebug() << "[OknoGlowne::on_actionNowa_triggered()]";
+    //zaciagnij sciezke hasel
+    plik_hasel.sciezka=plik_conf.wgraj_sciezke_do_hasel();
+    plik_hasel.tekst_na_baze();
+    if (plik_hasel.tekst.isEmpty())
     {
        qDebug() << "Plik pusty lub otwarcie nie udane!!";
        return;
     }
-
-    plik_hasel.przetworz_na_baze_hasel(plik_hasel.tekst);
     QString informacja = "Hasła zaczytane z pliku o ścieżce: \n";
     informacja.append(plik_hasel.sciezka);
     QMessageBox::information(
@@ -47,18 +54,13 @@ void OknoGlowne::on_actionWczytaj_triggered()
                 informacja
                 );
 
-}
 
-
-void OknoGlowne::on_actionNowa_triggered()
-{
-    qDebug() << "[OknoGlowne::on_actionNowa_triggered()]";
     ui->TablicaLiter->clear();
     ui->TablicaLiter->setRowCount(0);
 
     if(plik_hasel.baza.isEmpty())
     {
-        qDebug() << "Brak bazy";
+        qDebug() << "Brak haseł";
         QMessageBox::warning(
                     this,
                     tr("Błąd"),
@@ -81,7 +83,7 @@ void OknoGlowne::on_actionNowa_triggered()
         {
 
             ui->TablicaLiter->setItem(j,i,new QTableWidgetItem(temp.at(licznik)));
-            qDebug()<<i<<":"<<j<<" licznik wynosi: "<<licznik <<" litera to "<<temp.at(licznik);
+            //qDebug()<<i<<":"<<j<<" licznik wynosi: "<<licznik <<" litera to "<<temp.at(licznik);
             licznik++;
         }
     }

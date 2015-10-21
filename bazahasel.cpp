@@ -13,16 +13,20 @@ QStringList BazaHasel::przetworz_na_baze_hasel(QString t)
     return t.split(szukana);
 }
 
-QStringList BazaHasel::tekst_na_baze()
+void BazaHasel::tekst_na_baze()
 {
     qDebug() << "[BazaHasel::tekst_na_baze()]";
+
+    odczyt_z_pliku();
+    if (tekst.isEmpty())
+        return;
     QStringList temp = przetworz_na_baze_hasel(tekst);
     for (int i = 0; i < temp.size();++i)
     {
         qDebug() << temp.at(i);
     }
 
-    return temp;
+    baza = temp;
 }
 
 QString BazaHasel::baza_na_tekst()

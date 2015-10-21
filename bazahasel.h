@@ -6,9 +6,10 @@
 class BazaHasel : public Plik
 {
 public:
-    QStringList baza;
-    QStringList tekst_na_baze();
     BazaHasel();
+    QStringList baza;
+    void tekst_na_baze();
+
     QString baza_na_tekst();
     QStringList przetworz_na_baze_hasel(QString t);
 };

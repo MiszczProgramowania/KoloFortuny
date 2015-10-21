@@ -15,13 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         oknoglowne.cpp \
     plik.cpp \
-    bazahasel.cpp
+    bazahasel.cpp \
+    konfiguracja.cpp
 
 HEADERS  += oknoglowne.h \
     plik.h \
-    bazahasel.h
+    bazahasel.h \
+    konfiguracja.h
 
 FORMS    += oknoglowne.ui
 
 DISTFILES += \
-    readme.txt
+    readme.txt \
+    konfiguracja.dat

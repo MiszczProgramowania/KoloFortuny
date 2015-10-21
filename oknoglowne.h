@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "plik.h"
 #include "bazahasel.h"
+#include "konfiguracja.h"
 
 namespace Ui {
 class OknoGlowne;
@@ -13,7 +14,9 @@ class OknoGlowne : public QMainWindow
 {
     Q_OBJECT
 private:
+    Konfiguracja plik_conf;
     BazaHasel plik_hasel;
+
 public:
 
     explicit OknoGlowne(QWidget *parent = 0);
