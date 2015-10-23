@@ -28,6 +28,8 @@ private slots:
 
     void on_actionNowa_triggered();
 
+    void on_actionUtw_rz_triggered();
+
 private:
     Ui::OknoGlowne *ui;
 };

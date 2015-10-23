@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <Qtime>
+#include "formularzhasel.h"
 
 OknoGlowne::OknoGlowne(QWidget *parent) :
     QMainWindow(parent),
@@ -106,4 +107,10 @@ void OknoGlowne::inicjalizacja_partii(QString temp)
             licznik++;
         }
     }
+}
+
+void OknoGlowne::on_actionUtw_rz_triggered()
+{
+    FormularzHasel tworzenie_hasel;
+    tworzenie_hasel.exec();
 }

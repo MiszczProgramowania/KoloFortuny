@@ -16,14 +16,17 @@ SOURCES += main.cpp\
         oknoglowne.cpp \
     plik.cpp \
     bazahasel.cpp \
-    konfiguracja.cpp
+    konfiguracja.cpp \
+    formularzhasel.cpp
 
 HEADERS  += oknoglowne.h \
     plik.h \
     bazahasel.h \
-    konfiguracja.h
+    konfiguracja.h \
+    formularzhasel.h
 
-FORMS    += oknoglowne.ui
+FORMS    += oknoglowne.ui \
+    formularzhasel.ui
 
 DISTFILES += \
     readme.txt \
