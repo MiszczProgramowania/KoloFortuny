@@ -90,7 +90,7 @@ int OknoGlowne::losowanie_partii()
 void OknoGlowne::inicjalizacja_partii(QString temp)
 {
     qDebug() << "Rozmiar stringa: " << temp.length();
-    int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount();
+    int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount(); // potencjalne zagrożenie dla wyjątków
     if (temp.length()%ui->TablicaLiter->columnCount())
         ile_wierszy++;
     qDebug() << "ile_wierszy: " << ile_wierszy;

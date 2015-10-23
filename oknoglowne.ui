@@ -111,6 +111,7 @@
     <property name="title">
      <string>Hasła</string>
     </property>
+    <addaction name="actionUtw_rz"/>
     <addaction name="actionWczytaj"/>
    </widget>
    <addaction name="menuGra"/>
@@ -130,6 +131,11 @@
   <action name="actionWczytaj">
    <property name="text">
     <string>Wczytaj</string>
+   </property>
+  </action>
+  <action name="actionUtw_rz">
+   <property name="text">
+    <string>Utwórz</string>
    </property>
   </action>
  </widget>
