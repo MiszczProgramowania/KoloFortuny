@@ -15,6 +15,9 @@ public:
     explicit FormularzHasel(QWidget *parent = 0);
     ~FormularzHasel();
 
+private slots:
+
+
 private:
     Ui::FormularzHasel *ui;
 };
