@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QPushButton>
 #include "bazahasel.h"
+#include <QFileDialog>
 
 namespace Ui {
 class FormularzHasel;
@@ -14,11 +15,11 @@ class FormularzHasel : public QDialog
 {
     Q_OBJECT
 private:
-    BazaHasel tymczasowa;
+
 public:
     explicit FormularzHasel(QWidget *parent = 0);
     ~FormularzHasel();
-
+    BazaHasel tymczasowa;
 private slots:
 
     void on_tablicaSlow_cellChanged(int row, int column);

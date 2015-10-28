@@ -47,6 +47,17 @@ void FormularzHasel::on_buttonBox_accepted()
             qDebug() <<"Wpisuje pustą podpowiedź";
         }
     }
-
+    qDebug() << "zapisywanie rozpoczynam";
+    qDebug() << "[OknoGlowne::on_actionWczytaj_triggered()]";
+    tymczasowa.sciezka = QFileDialog::getSaveFileName(
+                this, //ten plik
+                tr("Zapisz plik"), //tytuł okna
+                QString(), //ścieżka do pliku (opcjonalna w tym momencie funkcja generująca NULL)
+                "Plik Tekstowy(*.txt);;Wszystkie(*.*)"); //to czego szukamy w formularzu
+    qDebug() << "Wczytany baza test numeru 1: " << tymczasowa.baza.at(1);
+    tymczasowa.tekst=tymczasowa.baza_na_tekst();
+    qDebug() << "Wczytany tekst nr 1: " << tymczasowa.tekst;
+    tymczasowa.zapis_do_pliku();
+    qDebug() << "zapisywanie END";
     qDebug()<<"FormularzHasel::on_buttonBox_accepted()->NIEUKOŃCZONO!->END";
 }
