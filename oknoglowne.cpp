@@ -33,6 +33,7 @@ void OknoGlowne::on_actionWczytaj_triggered()
                 "Plik Tekstowy(*.txt);;Wszystkie(*.*)"); //to czego szukamy w formularzu
 
     plik_conf.ustaw_sciezke_do_hasel(plik_hasel.sciezka);
+    plik_conf.konfiguracja_na_tekst();
 
 }
 
@@ -45,8 +46,35 @@ void OknoGlowne::on_actionNowa_triggered()
     plik_hasel.tekst_na_baze();
     if (plik_hasel.tekst.isEmpty())
     {
-       qDebug() << "Plik pusty lub otwarcie nie udane!!";
-       return;
+       QMessageBox msgBox;
+       msgBox.setText("Najpierw zaczytaj baze haseł lub utwórz nową!");
+       msgBox.setInformativeText("Czy chcesz kontynuować?");
+       msgBox.setStandardButtons(QMessageBox::Save |QMessageBox::Open| QMessageBox::Cancel);
+       msgBox.setDefaultButton(QMessageBox::Save);
+       msgBox.setIcon(QMessageBox::Warning);
+       msgBox.button(QMessageBox::Open)->setText("Utwórz");
+       msgBox.button(QMessageBox::Save)->setText("Wczytaj");
+       msgBox.button(QMessageBox::Cancel)->setText("Anuluj");
+       int ret = msgBox.exec();
+       qDebug() << "Zwrócono: " << ret;
+       if(ret==2048)
+       {
+            on_actionWczytaj_triggered();
+            return;
+       }
+        else if(ret==8192)
+        {
+           on_actionUtw_rz_triggered();
+           return;
+        }
+       else if(ret==4194304)
+       {
+            return;
+       }
+       else
+       {
+            qDebug()<<"Nie zwrócono nic sensownego!";
+       }
     }
     QString informacja = "Hasła zaczytane z pliku o ścieżce: \n";
     informacja.append(plik_hasel.sciezka);
@@ -114,4 +142,5 @@ void OknoGlowne::on_actionUtw_rz_triggered()
     FormularzHasel tworzenie_hasel;
     tworzenie_hasel.exec();
     plik_conf.ustaw_sciezke_do_hasel(tworzenie_hasel.tymczasowa.sciezka);
+    plik_conf.konfiguracja_na_tekst();
 }

@@ -28,7 +28,7 @@ void FormularzHasel::on_tablicaSlow_cellChanged(int row, int column)
 
 void FormularzHasel::on_buttonBox_accepted()
 {
-    qDebug()<<"FormularzHasel::on_buttonBox_accepted()->NIEUKOŃCZONO!";
+    qDebug()<<"FormularzHasel::on_buttonBox_accepted()";
 
     for (int i=1;i<(ui->tablicaSlow->rowCount());i++)
     {
@@ -48,16 +48,15 @@ void FormularzHasel::on_buttonBox_accepted()
         }
     }
     qDebug() << "zapisywanie rozpoczynam";
-    qDebug() << "[OknoGlowne::on_actionWczytaj_triggered()]";
     tymczasowa.sciezka = QFileDialog::getSaveFileName(
                 this, //ten plik
                 tr("Zapisz plik"), //tytuł okna
                 QString(), //ścieżka do pliku (opcjonalna w tym momencie funkcja generująca NULL)
-                "Plik Tekstowy(*.txt);;Wszystkie(*.*)"); //to czego szukamy w formularzu
-    qDebug() << "Wczytany baza test numeru 1: " << tymczasowa.baza.at(1);
+                "Plik Tekstowy(*.txt);Wszystkie(*.*)"); //to czego szukamy w formularzu
+
     tymczasowa.tekst=tymczasowa.baza_na_tekst();
-    qDebug() << "Wczytany tekst nr 1: " << tymczasowa.tekst;
+    qDebug() << "Wczytany tekst: " << tymczasowa.tekst;
     tymczasowa.zapis_do_pliku();
     qDebug() << "zapisywanie END";
-    qDebug()<<"FormularzHasel::on_buttonBox_accepted()->NIEUKOŃCZONO!->END";
+    qDebug()<<"FormularzHasel::on_buttonBox_accepted()->>END";
 }
