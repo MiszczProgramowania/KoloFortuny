@@ -113,4 +113,5 @@ void OknoGlowne::on_actionUtw_rz_triggered()
 {
     FormularzHasel tworzenie_hasel;
     tworzenie_hasel.exec();
+    //BazaHasel::baza=tworzenie_hasel.tymczasowa.baza;
 }

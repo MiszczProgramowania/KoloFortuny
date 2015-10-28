@@ -28,5 +28,25 @@ void FormularzHasel::on_tablicaSlow_cellChanged(int row, int column)
 
 void FormularzHasel::on_buttonBox_accepted()
 {
+    qDebug()<<"FormularzHasel::on_buttonBox_accepted()->NIEUKOŃCZONO!";
 
+    for (int i=1;i<(ui->tablicaSlow->rowCount());i++)
+    {
+
+        tymczasowa.baza << ui->tablicaSlow->item(i,0)->text();
+        qDebug() <<"Wpisuje do bazy haseł: " << tymczasowa.baza.at(i-1);
+
+        if (ui->tablicaSlow->item(i,1)!=0)
+        {
+            tymczasowa.podpowiedzi << ui->tablicaSlow->item(i,1)->text();
+            qDebug() <<"Wpisuje do bazy podpowiedzi: " << tymczasowa.podpowiedzi.at(i-1);
+        }
+        else
+        {
+            tymczasowa.podpowiedzi << "";
+            qDebug() <<"Wpisuje pustą podpowiedź";
+        }
+    }
+
+    qDebug()<<"FormularzHasel::on_buttonBox_accepted()->NIEUKOŃCZONO!->END";
 }

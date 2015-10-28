@@ -8,6 +8,8 @@ class BazaHasel : public Plik
 public:
     BazaHasel();
     QStringList baza;
+    QStringList podpowiedzi;
+
     void tekst_na_baze();
 
     QString baza_na_tekst();
