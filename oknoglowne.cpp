@@ -88,7 +88,7 @@ void OknoGlowne::on_actionNowa_triggered()
     ui->TablicaLiter->clear();
     ui->TablicaLiter->setRowCount(0);
 
-    if(plik_hasel.baza.isEmpty())
+    if(plik_hasel.baza.slowa.isEmpty())
     {
         qDebug() << "Brak haseł";
         QMessageBox::warning(
@@ -102,7 +102,7 @@ void OknoGlowne::on_actionNowa_triggered()
 
     int los = losowanie_partii();
 
-    OknoGlowne::inicjalizacja_partii(plik_hasel.baza.at(los));
+    OknoGlowne::inicjalizacja_partii(plik_hasel.baza.slowa.at(los));
 
 }
 int OknoGlowne::losowanie_partii()
@@ -111,7 +111,7 @@ int OknoGlowne::losowanie_partii()
     czas = czas.currentTime();
     int milisekunda=czas.msec();
 
-    int los = milisekunda % plik_hasel.baza.count();
+    int los = milisekunda % plik_hasel.baza.slowa.count();
     qDebug() << "czas wynosi: "<< milisekunda << "Wylosowałeś hasło numer: " << los;
     return los;
 }

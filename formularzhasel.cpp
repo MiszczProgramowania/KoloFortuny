@@ -33,17 +33,17 @@ void FormularzHasel::on_buttonBox_accepted()
     for (int i=1;i<(ui->tablicaSlow->rowCount());i++)
     {
 
-        tymczasowa.baza << ui->tablicaSlow->item(i,0)->text();
-        qDebug() <<"Wpisuje do bazy haseł: " << tymczasowa.baza.at(i-1);
+        tymczasowa.baza.slowa << ui->tablicaSlow->item(i,0)->text();
+        qDebug() <<"Wpisuje do bazy haseł: " << tymczasowa.baza.slowa.at(i-1);
 
         if (ui->tablicaSlow->item(i,1)!=0)
         {
-            tymczasowa.podpowiedzi << ui->tablicaSlow->item(i,1)->text();
-            qDebug() <<"Wpisuje do bazy podpowiedzi: " << tymczasowa.podpowiedzi.at(i-1);
+            tymczasowa.baza.podpowiedzi << ui->tablicaSlow->item(i,1)->text();
+            qDebug() <<"Wpisuje do bazy podpowiedzi: " << tymczasowa.baza.podpowiedzi.at(i-1);
         }
         else
         {
-            tymczasowa.podpowiedzi << "";
+            tymczasowa.baza.podpowiedzi << "";
             qDebug() <<"Wpisuje pustą podpowiedź";
         }
     }

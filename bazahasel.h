@@ -5,10 +5,17 @@
 
 class BazaHasel : public Plik
 {
+private:
+    QString separator;
 public:
     BazaHasel();
-    QStringList baza;
-    QStringList podpowiedzi;
+    struct Baza
+    {
+        QStringList slowa;
+        QStringList podpowiedzi;
+    }baza;
+
+
 
     void tekst_na_baze();
 
