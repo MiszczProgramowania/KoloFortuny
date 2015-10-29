@@ -19,6 +19,8 @@ private:
 
     int losowanie_partii();
     void inicjalizacja_partii(QString temp);
+    void inicjalizacja_podpowiedzi(QString temp);
+
 public:
 
     explicit OknoGlowne(QWidget *parent = 0);

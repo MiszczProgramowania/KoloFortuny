@@ -94,7 +94,7 @@ void OknoGlowne::on_actionNowa_triggered()
         QMessageBox::warning(
                     this,
                     tr("Błąd"),
-                    "Najpierw wczytaj swoją pierwszą bazę. Uzyj funkcji w menu górnym:\n Hasła->Wczytaj"
+                    "Błąd odczytu albo zaczytałeś pusty plik!"
                     );
         return;
     }
@@ -103,7 +103,8 @@ void OknoGlowne::on_actionNowa_triggered()
     int los = losowanie_partii();
 
     OknoGlowne::inicjalizacja_partii(plik_hasel.baza.slowa.at(los));
-
+    QString podpowiedz="Podpowiedź: "+plik_hasel.baza.podpowiedzi.at(los);
+    OknoGlowne::inicjalizacja_podpowiedzi(podpowiedz);
 }
 int OknoGlowne::losowanie_partii()
 {
@@ -136,7 +137,12 @@ void OknoGlowne::inicjalizacja_partii(QString temp)
         }
     }
 }
-
+void OknoGlowne::inicjalizacja_podpowiedzi(QString temp)
+{
+    qDebug() << "[OknoGlowne::inicjalizacja_podpowiedzi(QString temp)]";
+    ui->labelPodpowiedz->setText(temp);
+    qDebug() << "[OknoGlowne::inicjalizacja_podpowiedzi(QString temp)-- END]";
+}
 void OknoGlowne::on_actionUtw_rz_triggered()
 {
     FormularzHasel tworzenie_hasel;
