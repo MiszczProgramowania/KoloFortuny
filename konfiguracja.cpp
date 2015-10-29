@@ -13,17 +13,15 @@ QString Konfiguracja::wycinanie_parametru(QString szukana)
     szukana=szukana+"=";
     temp_start= tekst.lastIndexOf(szukana)+szukana.length();
     qDebug() << "Temp_START >> " << temp_start;
-    qDebug() << "Tniemy lewa strone!!";
+
     temp.remove(0,temp_start);
     qDebug() << temp;
 
-    qDebug() << "Tniemy prawa strone!!";
+
     temp_end = temp.indexOf("\n");
     temp.truncate(temp_end);
-    qDebug() << temp;
-    qDebug() << "Oto wynik cięcia: ";
+    qDebug() << "Oto wynik wycinania parametru konfiguracyjnego: " << temp;
 
-    qDebug() << temp;
     return temp;
 }
 

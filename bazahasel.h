@@ -7,14 +7,16 @@ class BazaHasel : public Plik
 {
 private:
     QString separator;
+
 public:
     BazaHasel();
+    int nrPartii;
     struct Baza
     {
         QStringList slowa;
         QStringList podpowiedzi;
     }baza;
-
+    QString znacznikNiewiadomej;
 
 
     void tekst_na_baze();

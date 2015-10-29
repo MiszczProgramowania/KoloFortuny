@@ -1,6 +1,5 @@
 TODOLIST
 
-1.Ukryj hasła znakami np. *
 2.Zacznij tworzenie zgadywania liter
 3.Zacznij tworzyć losowanie wygranej np po kliknięciu przycisku.
 4.Zacznij tworzyć licznik wygranej kwoty (pamietaj kiedys bedzie więcej graczy)

@@ -3,6 +3,8 @@
 BazaHasel::BazaHasel()
 {
     separator=";";
+    znacznikNiewiadomej="*";
+    nrPartii=-1;
 }
 
 QStringList BazaHasel::przetworz_na_baze_hasel(QString t)
@@ -41,7 +43,7 @@ void BazaHasel::tekst_na_baze()
         int temp_end = baza.slowa.at(i).indexOf(separator);
         if (temp_end!=-1)
         {
-            qDebug() << "Tniemy prawa strone!!";
+
             QString temp = baza.slowa.at(i);
             temp.truncate(temp_end);
             baza.slowa.replace(i,temp);
@@ -49,7 +51,7 @@ void BazaHasel::tekst_na_baze()
             temp = baza.podpowiedzi.at(i);
             if (!temp.isEmpty())
             {
-                qDebug() << "Tniemy lewa strone!!";
+
                 temp.remove(0,temp_end+1);
                 baza.podpowiedzi.replace(i,temp);
                 qDebug() <<"baza podpowiedz o indexie "<<i<<" wynosi: " << baza.podpowiedzi.at(i);

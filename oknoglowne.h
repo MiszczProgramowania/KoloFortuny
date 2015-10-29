@@ -18,8 +18,10 @@ private:
     BazaHasel plik_hasel;
 
     int losowanie_partii();
-    void inicjalizacja_partii(QString temp);
+    void odkrycie_hasla(QString temp);
+    void zakrycie_hasla(QString temp);
     void inicjalizacja_podpowiedzi(QString temp);
+    void szukajLiter(QString temp,QChar szukana);
 
 public:
 
@@ -31,6 +33,8 @@ private slots:
     void on_actionNowa_triggered();
 
     void on_actionUtw_rz_triggered();
+
+    void on_wybierzLitere_released();
 
 private:
     Ui::OknoGlowne *ui;

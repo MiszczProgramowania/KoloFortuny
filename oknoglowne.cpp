@@ -100,10 +100,10 @@ void OknoGlowne::on_actionNowa_triggered()
     }
     qDebug() << "Baza Istnieje";
 
-    int los = losowanie_partii();
+    plik_hasel.nrPartii = losowanie_partii();
 
-    OknoGlowne::inicjalizacja_partii(plik_hasel.baza.slowa.at(los));
-    QString podpowiedz="Podpowiedź: "+plik_hasel.baza.podpowiedzi.at(los);
+    OknoGlowne::zakrycie_hasla(plik_hasel.baza.slowa.at(plik_hasel.nrPartii));
+    QString podpowiedz="Podpowiedź: "+plik_hasel.baza.podpowiedzi.at(plik_hasel.nrPartii);
     OknoGlowne::inicjalizacja_podpowiedzi(podpowiedz);
 }
 int OknoGlowne::losowanie_partii()
@@ -117,7 +117,7 @@ int OknoGlowne::losowanie_partii()
     return los;
 }
 
-void OknoGlowne::inicjalizacja_partii(QString temp)
+void OknoGlowne::odkrycie_hasla(QString temp)
 {
     qDebug() << "Rozmiar stringa: " << temp.length();
     int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount(); // potencjalne zagrożenie dla wyjątków
@@ -137,6 +137,31 @@ void OknoGlowne::inicjalizacja_partii(QString temp)
         }
     }
 }
+void OknoGlowne::zakrycie_hasla(QString temp)//DO ZROBIENIA
+{
+    qDebug() << "[void OknoGlowne::zakrycie_hasla(QString temp)]";
+    qDebug() << "Rozmiar stringa: " << temp.length();
+
+    int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount(); // potencjalne zagrożenie dla wyjątków
+    if (temp.length()%ui->TablicaLiter->columnCount())
+        ile_wierszy++;
+    qDebug() << "ile_wierszy: " << ile_wierszy;
+
+    for (int j=0,licznik=0;j < ile_wierszy;j++)
+    {
+        ui->TablicaLiter->insertRow(j);
+        for (int i=0;i < ui->TablicaLiter->columnCount()&&licznik<temp.length();i++)
+        {
+            if (temp.at(licznik)!=' ')
+            {
+                ui->TablicaLiter->setItem(j,i,new QTableWidgetItem(plik_hasel.znacznikNiewiadomej));
+            }
+            licznik++;
+        }
+    }
+    qDebug() << "[void OknoGlowne::zakrycie_hasla(QString temp)----END]";
+}
+
 void OknoGlowne::inicjalizacja_podpowiedzi(QString temp)
 {
     qDebug() << "[OknoGlowne::inicjalizacja_podpowiedzi(QString temp)]";
@@ -149,4 +174,55 @@ void OknoGlowne::on_actionUtw_rz_triggered()
     tworzenie_hasel.exec();
     plik_conf.ustaw_sciezke_do_hasel(tworzenie_hasel.tymczasowa.sciezka);
     plik_conf.konfiguracja_na_tekst();
+}
+
+void OknoGlowne::on_wybierzLitere_released()
+{
+    QString szukanaString = ui->wybranaLitera->text();
+    if (szukanaString.isEmpty())
+    {
+        qDebug()<<"Wybrana litera jest pusta";
+        QMessageBox::warning(
+                    this,
+                    tr("Błąd"),
+                    "Wprowadź jakąś litere!"
+                    );
+        return;
+    }
+    QChar szukana=szukanaString.at(0);
+    qDebug()<<"Szukamy znaku: "<<szukana;
+
+    if(plik_hasel.nrPartii==-1)
+    {
+        qDebug()<<"Brak wczytanej bazy";
+        QMessageBox::warning(
+                    this,
+                    tr("Błąd"),
+                    "Brak wczytanej bazy.\n Najpiew zacznij NOWĄ GRĘ!"
+                    );
+        ui->wybranaLitera->clear();
+        return;
+    }
+    szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
+    ui->wybranaLitera->clear();
+}
+void OknoGlowne::szukajLiter(QString temp,QChar szukana)
+{
+    qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)]";
+    int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount();
+    if (temp.length()%ui->TablicaLiter->columnCount())
+        ile_wierszy++;
+
+    for (int j=0,licznik=0;j < ile_wierszy;j++)
+    {
+        for (int i=0;i < ui->TablicaLiter->columnCount()&&licznik<temp.length();i++)
+        {
+            if (szukana==temp.at(licznik))
+            {
+                ui->TablicaLiter->setItem(j,i,new QTableWidgetItem(temp.at(licznik)));
+            }
+            licznik++;
+        }
+    }
+    qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)----END]";
 }
