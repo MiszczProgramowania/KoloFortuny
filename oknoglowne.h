@@ -36,6 +36,8 @@ private slots:
 
     void on_wybierzLitere_released();
 
+    void on_wybranaLitera_returnPressed();
+
 private:
     Ui::OknoGlowne *ui;
 };

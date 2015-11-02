@@ -15,6 +15,7 @@ OknoGlowne::OknoGlowne(QWidget *parent) :
     ui->setupUi(this);
     if(ui->TablicaLiter->isSortingEnabled())
         ui->TablicaLiter->setSortingEnabled(false);
+    ui->wybierzLitere->setAutoDefault(true);
 }
 
 OknoGlowne::~OknoGlowne()
@@ -225,4 +226,9 @@ void OknoGlowne::szukajLiter(QString temp,QChar szukana)
         }
     }
     qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)----END]";
+}
+
+void OknoGlowne::on_wybranaLitera_returnPressed()
+{
+    OknoGlowne::on_wybierzLitere_released();
 }
