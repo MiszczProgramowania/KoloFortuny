@@ -32,6 +32,7 @@ public:
     QString intToStr(int n);
     void najpierwZaczytajBaze();
     void najpierwUruchomGre();
+    void zmianaTury();
 
     ~OknoGlowne();
 private slots:

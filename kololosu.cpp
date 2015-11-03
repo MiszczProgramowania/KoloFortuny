@@ -3,9 +3,11 @@
 KoloLosu::KoloLosu()
     :
     wylosowanaPozycja(-1),
-    iloscPozycji(12)
+    iloscPozycji(12),
+    tura(1)
 {
-
+    nagrody << "Bankrut" << "400" << "2500" << "250" << "STOP" << "400" << "200" << "100" << "STOP" << "150" << "250" <<"300";
+    nazwaTury << "Początek BETA narazie zakręć kołem" << "Zakręć kołem" << "Wybierz Literę lub zgaduj";
 }
 int KoloLosu::wygrajPunkty(int poprzedniePunkty, int wygranePunkty)
 {
@@ -30,19 +32,37 @@ void KoloLosu::losowaniePozycji()
     qDebug()<<"Wylosowana pozycja to: "<<wylosowanaPozycja;
     qDebug()<<"[void KoloLosu::losowaniePozycji()---END]";
 }
-void KoloLosu::realizacjaWygranej()
+bool KoloLosu::czyTraciKolejke()
 {
-    qDebug()<<"[void KoloLosu::realizacjaWygranej()]";
     if(wylosowanaPozycja==-1)
     {
         qDebug()<<"Kolo na pozycji startowej realizacja wygranej nie udana!";
-        return;
+        return true;
     }
     if (wylosowanaPozycja==0)
     {
         gracz1.ustawPunkty(bankrut());
-        return;
+        return true;
     }
+    if (wylosowanaPozycja==4)
+    {
+        gracz1.ustawPunkty(stop(gracz1.pobierzPunkty()));
+        return true;
+    }
+
+    if (wylosowanaPozycja==8)
+    {
+        gracz1.ustawPunkty(stop(gracz1.pobierzPunkty()));
+        return true;
+    }
+    return false;
+}
+
+void KoloLosu::realizacjaWygranej()
+{
+    qDebug()<<"[void KoloLosu::realizacjaWygranej()]";
+
+
     if (wylosowanaPozycja==1)
     {
         gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),400));
@@ -60,11 +80,7 @@ void KoloLosu::realizacjaWygranej()
         return;
     }
 
-    if (wylosowanaPozycja==4)
-    {
-        gracz1.ustawPunkty(stop(gracz1.pobierzPunkty()));
-        return;
-    }
+
 
     if (wylosowanaPozycja==5)
     {
@@ -84,11 +100,7 @@ void KoloLosu::realizacjaWygranej()
         return;
     }
 
-    if (wylosowanaPozycja==8)
-    {
-        gracz1.ustawPunkty(stop(gracz1.pobierzPunkty()));
-        return;
-    }
+
 
     if (wylosowanaPozycja==9)
     {

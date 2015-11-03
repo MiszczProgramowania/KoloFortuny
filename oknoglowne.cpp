@@ -186,38 +186,58 @@ void OknoGlowne::on_actionUtw_rz_triggered()
 
 void OknoGlowne::on_wybierzLitere_released()
 {
-    QString szukanaString = ui->wybranaLitera->text();
-    if (szukanaString.isEmpty())
+    if (kolo->tura==2)
     {
-        qDebug()<<"Wybrana litera jest pusta";
-        QMessageBox::warning(
-                    this,
-                    tr("Błąd"),
-                    "Wprowadź jakąś litere!"
-                    );
-        return;
-    }
-    QChar szukana=szukanaString.at(0);
-    qDebug()<<"Szukamy znaku: "<<szukana;
+        QString szukanaString = ui->wybranaLitera->text();
+        if (szukanaString.isEmpty())
+        {
+            qDebug()<<"Wybrana litera jest pusta";
+            QMessageBox::warning(
+                        this,
+                        tr("Błąd"),
+                        "Wprowadź jakąś litere!"
+                        );
+            return;
+        }
+        QChar szukana=szukanaString.at(0);
+        qDebug()<<"Szukamy znaku: "<<szukana;
 
-    if(plik_hasel.nrPartii==-1)
-    {
-        qDebug()<<"Brak wczytanej bazy";
-        QMessageBox::warning(
-                    this,
-                    tr("Błąd"),
-                    "Brak wczytanej bazy.\n Najpiew zacznij NOWĄ GRĘ!"
-                    );
+        if(plik_hasel.nrPartii==-1)
+        {
+            qDebug()<<"Brak wczytanej bazy";
+            QMessageBox::warning(
+                        this,
+                        tr("Błąd"),
+                        "Brak wczytanej bazy.\n Najpiew zacznij NOWĄ GRĘ!"
+                        );
+            ui->wybranaLitera->clear();
+            return;
+        }
+        szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
         ui->wybranaLitera->clear();
-        return;
+
+        zmianaTury();
+
     }
-    szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
-    ui->wybranaLitera->clear();
+    else
+    {
+        QMessageBox::warning(this, tr("Zła tura"),
+                                       tr("Wykonałeś akcje nie przewidzianą w tej turze.\n"));
+        qDebug()<<"Jest teraz inna tura o nazwie: "<<kolo->nazwaTury.at(kolo->tura);
+        qDebug()<<"Najpierw ją ukończ";
+    }
 }
+void OknoGlowne::zmianaTury()
+{
+    kolo->tura=kolo->tura+1;
+    if (kolo->tura >= kolo->nazwaTury.length())
+        kolo->tura=1;
+    ui->labelTura->setText("Tura numer: "+intToStr(kolo->tura)+" o nazwie: "+ kolo->nazwaTury.at(kolo->tura));
+}
+
 void OknoGlowne::szukajLiter(QString temp,QChar szukana)
 {
     qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)]";
-
     int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount();
     if (temp.length()%ui->TablicaLiter->columnCount())
         ile_wierszy++;
@@ -291,11 +311,25 @@ void OknoGlowne::on_buttonLosuj_released()
     if (kolo==NULL)
     {
         najpierwUruchomGre();
+        return;
     }
+    if (kolo->tura==1)
+    {
     kolo->losowaniePozycji();
+    ui->labelWylosowano->setText("Wylosowano na kole: " + kolo->nagrody.at(kolo->wylosowanaPozycja));
     kolo->realizacjaWygranej();
     int liczba = kolo->gracz1.pobierzPunkty();
     QString lancuch = intToStr(liczba);
     ui->labelPunkty->setText(lancuch);
+    zmianaTury();
+    }
+    else
+    {
+        QMessageBox::warning(this, tr("Zła tura"),
+                                       tr("Wykonałeś akcje nie przewidzianą w tej turze.\n"
+                                          "Wykonaj polecenie zapisane w nagłówku programu"));
+        qDebug()<<"Jest teraz inna tura o nazwie: "<<kolo->nazwaTury.at(kolo->tura);
+        qDebug()<<"Najpierw ją ukończ";
+    }
     qDebug()<<"[void OknoGlowne::on_buttonLosuj_released()----NULL]";
 }

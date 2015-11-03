@@ -36,7 +36,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>40</y>
       <width>381</width>
       <height>101</height>
      </rect>
@@ -94,7 +94,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>-1</y>
+      <y>20</y>
       <width>381</width>
       <height>21</height>
      </rect>
@@ -107,7 +107,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
+      <y>150</y>
       <width>16</width>
       <height>20</height>
      </rect>
@@ -120,7 +120,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>130</y>
+      <y>150</y>
       <width>91</width>
       <height>21</height>
      </rect>
@@ -132,8 +132,8 @@
    <widget class="QLabel" name="labelPunkty">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>130</y>
+      <x>10</x>
+      <y>200</y>
       <width>151</width>
       <height>20</height>
      </rect>
@@ -146,13 +146,39 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>150</y>
+      <y>170</y>
       <width>141</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Zakręć kołem</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelWylosowano">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>150</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Koło wskazało:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelTura">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>381</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tura nr 0 . Wybierz -&gt; GRA -&gt; NOWA</string>
     </property>
    </widget>
   </widget>
