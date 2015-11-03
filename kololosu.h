@@ -23,7 +23,7 @@ public:
     int bankrut();
     int stop(int poprzedniePunkty);
     bool czyTraciKolejke();
-    void realizacjaWygranej();
+    void realizacjaWygranej(int liczbaWystapien);
     void losowaniePozycji();
 
 };

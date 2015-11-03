@@ -22,7 +22,7 @@ private:
     void odkrycie_hasla(QString temp);
     void zakrycie_hasla(QString temp);
     void inicjalizacja_podpowiedzi(QString temp);
-    void szukajLiter(QString temp,QChar szukana);
+    int szukajLiter(QString temp,QChar szukana);
 
 
 public:
@@ -33,6 +33,7 @@ public:
     void najpierwZaczytajBaze();
     void najpierwUruchomGre();
     void zmianaTury();
+    void uwzglednijWygrana(int liczbaWystapien);
 
     ~OknoGlowne();
 private slots:

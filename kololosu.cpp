@@ -4,7 +4,7 @@ KoloLosu::KoloLosu()
     :
     wylosowanaPozycja(-1),
     iloscPozycji(12),
-    tura(1)
+    tura(0)
 {
     nagrody << "Bankrut" << "400" << "2500" << "250" << "STOP" << "400" << "200" << "100" << "STOP" << "150" << "250" <<"300";
     nazwaTury << "Początek BETA narazie zakręć kołem" << "Zakręć kołem" << "Wybierz Literę lub zgaduj";
@@ -58,25 +58,25 @@ bool KoloLosu::czyTraciKolejke()
     return false;
 }
 
-void KoloLosu::realizacjaWygranej()
+void KoloLosu::realizacjaWygranej(int liczbaWystapien)
 {
     qDebug()<<"[void KoloLosu::realizacjaWygranej()]";
 
 
     if (wylosowanaPozycja==1)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),400));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),400*liczbaWystapien));
         return;
     }
     if (wylosowanaPozycja==2)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),2500));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),2500*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==3)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),250));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),250*liczbaWystapien));
         return;
     }
 
@@ -84,19 +84,19 @@ void KoloLosu::realizacjaWygranej()
 
     if (wylosowanaPozycja==5)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),400));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),400*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==6)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),200));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),200*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==7)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),100));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),100*liczbaWystapien));
         return;
     }
 
@@ -104,18 +104,18 @@ void KoloLosu::realizacjaWygranej()
 
     if (wylosowanaPozycja==9)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),150));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),150*liczbaWystapien));
         return;
     }
     if (wylosowanaPozycja==10)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),250));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),250*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==11)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),300));
+        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),300*liczbaWystapien));
         return;
     }
 

@@ -113,6 +113,7 @@ void OknoGlowne::on_actionNowa_triggered()
     OknoGlowne::inicjalizacja_podpowiedzi(podpowiedz);
 
     kolo = new KoloLosu;
+    zmianaTury();
 }
 int OknoGlowne::losowanie_partii()
 {
@@ -183,6 +184,13 @@ void OknoGlowne::on_actionUtw_rz_triggered()
     plik_conf.ustaw_sciezke_do_hasel(tworzenie_hasel.tymczasowa.sciezka);
     plik_conf.konfiguracja_na_tekst();
 }
+void OknoGlowne::uwzglednijWygrana(int liczbaWystapien)
+{
+    kolo->realizacjaWygranej(liczbaWystapien);
+    int liczba = kolo->gracz1.pobierzPunkty();
+    QString lancuch = intToStr(liczba);
+    ui->labelPunkty->setText(lancuch);
+}
 
 void OknoGlowne::on_wybierzLitere_released()
 {
@@ -201,7 +209,6 @@ void OknoGlowne::on_wybierzLitere_released()
         }
         QChar szukana=szukanaString.at(0);
         qDebug()<<"Szukamy znaku: "<<szukana;
-
         if(plik_hasel.nrPartii==-1)
         {
             qDebug()<<"Brak wczytanej bazy";
@@ -213,11 +220,12 @@ void OknoGlowne::on_wybierzLitere_released()
             ui->wybranaLitera->clear();
             return;
         }
-        szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
+        int liczbaWystapien = szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
+        if(liczbaWystapien>0)
+            uwzglednijWygrana(liczbaWystapien);
         ui->wybranaLitera->clear();
 
         zmianaTury();
-
     }
     else
     {
@@ -235,7 +243,7 @@ void OknoGlowne::zmianaTury()
     ui->labelTura->setText("Tura numer: "+intToStr(kolo->tura)+" o nazwie: "+ kolo->nazwaTury.at(kolo->tura));
 }
 
-void OknoGlowne::szukajLiter(QString temp,QChar szukana)
+int OknoGlowne::szukajLiter(QString temp,QChar szukana)
 {
     qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)]";
     int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount();
@@ -243,17 +251,20 @@ void OknoGlowne::szukajLiter(QString temp,QChar szukana)
         ile_wierszy++;
     temp=temp.toUpper();
     szukana=szukana.toUpper();
+    int liczbaWystapien=0;
     for (int j=0,licznik=0;j < ile_wierszy;j++)
     {
         for (int i=0;i < ui->TablicaLiter->columnCount()&&licznik<temp.length();i++)
         {
             if (szukana==temp.at(licznik))
             {
+                liczbaWystapien++;
                 ui->TablicaLiter->setItem(j,i,new QTableWidgetItem(temp.at(licznik)));
             }
             licznik++;
         }
     }
+    return liczbaWystapien;
     qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)----END]";
 }
 
@@ -317,10 +328,14 @@ void OknoGlowne::on_buttonLosuj_released()
     {
     kolo->losowaniePozycji();
     ui->labelWylosowano->setText("Wylosowano na kole: " + kolo->nagrody.at(kolo->wylosowanaPozycja));
-    kolo->realizacjaWygranej();
-    int liczba = kolo->gracz1.pobierzPunkty();
-    QString lancuch = intToStr(liczba);
-    ui->labelPunkty->setText(lancuch);
+    if (kolo->czyTraciKolejke())
+    {
+        int liczba = kolo->gracz1.pobierzPunkty();
+        QString lancuch = intToStr(liczba);
+        ui->labelPunkty->setText(lancuch);
+        return;
+    }
+
     zmianaTury();
     }
     else
