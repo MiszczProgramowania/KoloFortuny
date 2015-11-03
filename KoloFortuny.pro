@@ -17,13 +17,17 @@ SOURCES += main.cpp\
     plik.cpp \
     bazahasel.cpp \
     konfiguracja.cpp \
-    formularzhasel.cpp
+    formularzhasel.cpp \
+    gracz.cpp \
+    kololosu.cpp
 
 HEADERS  += oknoglowne.h \
     plik.h \
     bazahasel.h \
     konfiguracja.h \
-    formularzhasel.h
+    formularzhasel.h \
+    gracz.h \
+    kololosu.h
 
 FORMS    += oknoglowne.ui \
     formularzhasel.ui

@@ -210,10 +210,12 @@ void OknoGlowne::on_wybierzLitere_released()
 void OknoGlowne::szukajLiter(QString temp,QChar szukana)
 {
     qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)]";
+
     int ile_wierszy=temp.length()/ui->TablicaLiter->columnCount();
     if (temp.length()%ui->TablicaLiter->columnCount())
         ile_wierszy++;
-
+    temp=temp.toUpper();
+    szukana=szukana.toUpper();
     for (int j=0,licznik=0;j < ile_wierszy;j++)
     {
         for (int i=0;i < ui->TablicaLiter->columnCount()&&licznik<temp.length();i++)
