@@ -5,6 +5,7 @@
 #include "plik.h"
 #include "bazahasel.h"
 #include "konfiguracja.h"
+#include "kololosu.h"
 
 namespace Ui {
 class OknoGlowne;
@@ -23,9 +24,15 @@ private:
     void inicjalizacja_podpowiedzi(QString temp);
     void szukajLiter(QString temp,QChar szukana);
 
-public:
 
+public:
+    KoloLosu * kolo;
     explicit OknoGlowne(QWidget *parent = 0);
+
+    QString intToStr(int n);
+    void najpierwZaczytajBaze();
+    void najpierwUruchomGre();
+
     ~OknoGlowne();
 private slots:
     void on_actionWczytaj_triggered();
@@ -37,6 +44,8 @@ private slots:
     void on_wybierzLitere_released();
 
     void on_wybranaLitera_returnPressed();
+
+    void on_buttonLosuj_released();
 
 private:
     Ui::OknoGlowne *ui;

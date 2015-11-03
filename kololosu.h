@@ -2,19 +2,24 @@
 #define KOLOLOSU_H
 #include <QString>
 #include <QList>
+#include <QDebug>
+#include "gracz.h"
 
 class KoloLosu
 {
 private:
     int wylosowanaPozycja;
-    int iloscPozycji;
-public:
-    int wygrajPunkty(int poprzedniePunkty);
-    int bankrut(int poprzedniePunkty);
-    int stop(int poprzedniePunkty);
+    unsigned int iloscPozycji;
 
-    void losowaniePozycji();
+public:
+    Gracz gracz1;
     KoloLosu();
+    int wygrajPunkty(int poprzedniePunkty, int wygranePunkty);
+    int bankrut();
+    int stop(int poprzedniePunkty);
+    void realizacjaWygranej();
+    void losowaniePozycji();
+
 };
 
 #endif // KOLOLOSU_H

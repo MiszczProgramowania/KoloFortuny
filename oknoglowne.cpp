@@ -12,6 +12,7 @@ OknoGlowne::OknoGlowne(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OknoGlowne)
 {
+    kolo=NULL;
     ui->setupUi(this);
     if(ui->TablicaLiter->isSortingEnabled())
         ui->TablicaLiter->setSortingEnabled(false);
@@ -20,8 +21,8 @@ OknoGlowne::OknoGlowne(QWidget *parent) :
 
 OknoGlowne::~OknoGlowne()
 {
+    delete kolo;
     delete ui;
-
 }
 
 void OknoGlowne::on_actionWczytaj_triggered()
@@ -37,7 +38,38 @@ void OknoGlowne::on_actionWczytaj_triggered()
     plik_conf.konfiguracja_na_tekst();
 
 }
-
+void OknoGlowne::najpierwZaczytajBaze()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Najpierw zaczytaj baze haseł lub utwórz nową!");
+    msgBox.setInformativeText("Czy chcesz kontynuować?");
+    msgBox.setStandardButtons(QMessageBox::Save |QMessageBox::Open| QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.button(QMessageBox::Open)->setText("Utwórz");
+    msgBox.button(QMessageBox::Save)->setText("Wczytaj");
+    msgBox.button(QMessageBox::Cancel)->setText("Anuluj");
+    int ret = msgBox.exec();
+    qDebug() << "Zwrócono: " << ret;
+    if(ret==2048)
+    {
+         on_actionWczytaj_triggered();
+         return;
+    }
+     else if(ret==8192)
+     {
+        on_actionUtw_rz_triggered();
+        return;
+     }
+    else if(ret==4194304)
+    {
+         return;
+    }
+    else
+    {
+         qDebug()<<"Nie zwrócono nic sensownego!";
+    }
+}
 
 void OknoGlowne::on_actionNowa_triggered()
 {
@@ -47,35 +79,8 @@ void OknoGlowne::on_actionNowa_triggered()
     plik_hasel.tekst_na_baze();
     if (plik_hasel.tekst.isEmpty())
     {
-       QMessageBox msgBox;
-       msgBox.setText("Najpierw zaczytaj baze haseł lub utwórz nową!");
-       msgBox.setInformativeText("Czy chcesz kontynuować?");
-       msgBox.setStandardButtons(QMessageBox::Save |QMessageBox::Open| QMessageBox::Cancel);
-       msgBox.setDefaultButton(QMessageBox::Save);
-       msgBox.setIcon(QMessageBox::Warning);
-       msgBox.button(QMessageBox::Open)->setText("Utwórz");
-       msgBox.button(QMessageBox::Save)->setText("Wczytaj");
-       msgBox.button(QMessageBox::Cancel)->setText("Anuluj");
-       int ret = msgBox.exec();
-       qDebug() << "Zwrócono: " << ret;
-       if(ret==2048)
-       {
-            on_actionWczytaj_triggered();
-            return;
-       }
-        else if(ret==8192)
-        {
-           on_actionUtw_rz_triggered();
-           return;
-        }
-       else if(ret==4194304)
-       {
-            return;
-       }
-       else
-       {
-            qDebug()<<"Nie zwrócono nic sensownego!";
-       }
+       najpierwZaczytajBaze();
+
     }
     QString informacja = "Hasła zaczytane z pliku o ścieżce: \n";
     informacja.append(plik_hasel.sciezka);
@@ -106,6 +111,8 @@ void OknoGlowne::on_actionNowa_triggered()
     OknoGlowne::zakrycie_hasla(plik_hasel.baza.slowa.at(plik_hasel.nrPartii));
     QString podpowiedz="Podpowiedź: "+plik_hasel.baza.podpowiedzi.at(plik_hasel.nrPartii);
     OknoGlowne::inicjalizacja_podpowiedzi(podpowiedz);
+
+    kolo = new KoloLosu;
 }
 int OknoGlowne::losowanie_partii()
 {
@@ -233,4 +240,62 @@ void OknoGlowne::szukajLiter(QString temp,QChar szukana)
 void OknoGlowne::on_wybranaLitera_returnPressed()
 {
     OknoGlowne::on_wybierzLitere_released();
+}
+void OknoGlowne::najpierwUruchomGre()
+{
+    qDebug()<<"[void OknoGlowne::najpierwUruchomGre()]";
+    QMessageBox msgBox;
+    msgBox.setText("Najpierw uruchom gre!");
+    msgBox.setInformativeText("Czy chcesz kontynuować?");
+    msgBox.setStandardButtons(QMessageBox::Open| QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Open);
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.button(QMessageBox::Open)->setText("Nowa");
+    msgBox.button(QMessageBox::Cancel)->setText("Anuluj");
+    int ret = msgBox.exec();
+    qDebug() << "Zwrócono: " << ret;
+    if(ret==8192)
+     {
+        on_actionNowa_triggered();
+        return;
+     }
+    else if(ret==4194304)
+    {
+         return;
+    }
+    else
+    {
+         qDebug()<<"Nie zwrócono nic sensownego!";
+    }
+    qDebug()<<"[void OknoGlowne::najpierwUruchomGre()---END]";
+}
+QString OknoGlowne::intToStr(int n)
+{
+     QString tmp, ret;
+     if(n < 0) {
+      ret = "-";
+      n = -n;
+     }
+     do {
+      tmp += n % 10 + 48;
+      n -= n % 10;
+     }
+     while(n /= 10);
+     for(int i = tmp.length()-1; i >= 0; i--)
+      ret += tmp.at(i);
+     return ret;
+}
+void OknoGlowne::on_buttonLosuj_released()
+{
+    qDebug()<<"[void OknoGlowne::on_buttonLosuj_released()]";
+    if (kolo==NULL)
+    {
+        najpierwUruchomGre();
+    }
+    kolo->losowaniePozycji();
+    kolo->realizacjaWygranej();
+    int liczba = kolo->gracz1.pobierzPunkty();
+    QString lancuch = intToStr(liczba);
+    ui->labelPunkty->setText(lancuch);
+    qDebug()<<"[void OknoGlowne::on_buttonLosuj_released()----NULL]";
 }
