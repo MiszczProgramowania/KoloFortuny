@@ -10,15 +10,16 @@ class KoloLosu
 private:
 
     unsigned int iloscPozycji;
-
+    Gracz * listaGraczy;
 public:
-    Gracz gracz1;
+    Gracz * aktualnyZawodnik;
     QStringList nagrody;
     int wylosowanaPozycja;
     QStringList nazwaTury;
     int tura;
 
     KoloLosu();
+    ~KoloLosu();
     int wygrajPunkty(int poprzedniePunkty, int wygranePunkty);
     int bankrut();
     int stop(int poprzedniePunkty);

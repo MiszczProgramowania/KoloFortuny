@@ -6,9 +6,18 @@ KoloLosu::KoloLosu()
     iloscPozycji(12),
     tura(0)
 {
+    qDebug()<<"KoloLosu::KoloLosu()";
     nagrody << "Bankrut" << "400" << "2500" << "250" << "STOP" << "400" << "200" << "100" << "STOP" << "150" << "250" <<"300";
     nazwaTury << "Początek BETA narazie zakręć kołem" << "Zakręć kołem" << "Wybierz Literę lub zgaduj";
+    listaGraczy = new Gracz;
+    aktualnyZawodnik = listaGraczy;
+    qDebug()<<"KoloLosu::KoloLosu()--END";
 }
+KoloLosu::~KoloLosu()
+{
+    delete listaGraczy;
+}
+
 int KoloLosu::wygrajPunkty(int poprzedniePunkty, int wygranePunkty)
 {
     return poprzedniePunkty + wygranePunkty;
@@ -41,18 +50,18 @@ bool KoloLosu::czyTraciKolejke()
     }
     if (wylosowanaPozycja==0)
     {
-        gracz1.ustawPunkty(bankrut());
+        aktualnyZawodnik->ustawPunkty(bankrut());
         return true;
     }
     if (wylosowanaPozycja==4)
     {
-        gracz1.ustawPunkty(stop(gracz1.pobierzPunkty()));
+        aktualnyZawodnik->ustawPunkty(stop(aktualnyZawodnik->pobierzPunkty()));
         return true;
     }
 
     if (wylosowanaPozycja==8)
     {
-        gracz1.ustawPunkty(stop(gracz1.pobierzPunkty()));
+        aktualnyZawodnik->ustawPunkty(stop(aktualnyZawodnik->pobierzPunkty()));
         return true;
     }
     return false;
@@ -65,18 +74,18 @@ void KoloLosu::realizacjaWygranej(int liczbaWystapien)
 
     if (wylosowanaPozycja==1)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),400*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),400*liczbaWystapien));
         return;
     }
     if (wylosowanaPozycja==2)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),2500*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),2500*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==3)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),250*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),250*liczbaWystapien));
         return;
     }
 
@@ -84,19 +93,19 @@ void KoloLosu::realizacjaWygranej(int liczbaWystapien)
 
     if (wylosowanaPozycja==5)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),400*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),400*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==6)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),200*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),200*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==7)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),100*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),100*liczbaWystapien));
         return;
     }
 
@@ -104,18 +113,18 @@ void KoloLosu::realizacjaWygranej(int liczbaWystapien)
 
     if (wylosowanaPozycja==9)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),150*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),150*liczbaWystapien));
         return;
     }
     if (wylosowanaPozycja==10)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),250*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),250*liczbaWystapien));
         return;
     }
 
     if (wylosowanaPozycja==11)
     {
-        gracz1.ustawPunkty(wygrajPunkty(gracz1.pobierzPunkty(),300*liczbaWystapien));
+        aktualnyZawodnik->ustawPunkty(wygrajPunkty(aktualnyZawodnik->pobierzPunkty(),300*liczbaWystapien));
         return;
     }
 

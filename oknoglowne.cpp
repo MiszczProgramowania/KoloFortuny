@@ -119,8 +119,9 @@ void OknoGlowne::on_actionNowa_triggered()
     OknoGlowne::zakrycie_hasla(plik_hasel.baza.slowa.at(plik_hasel.nrPartii));
     QString podpowiedz="Podpowiedź: "+plik_hasel.baza.podpowiedzi.at(plik_hasel.nrPartii);
     OknoGlowne::inicjalizacja_podpowiedzi(podpowiedz);
-
+    qDebug()<<"Tworzymy KOLO";
     kolo = new KoloLosu;
+    qDebug()<<"Tworzymy KOLO END";
     zmianaTury();
 }
 int OknoGlowne::losowanie_partii()
@@ -195,7 +196,7 @@ void OknoGlowne::on_actionUtw_rz_triggered()
 void OknoGlowne::uwzglednijWygrana(int liczbaWystapien)
 {
     kolo->realizacjaWygranej(liczbaWystapien);
-    int liczba = kolo->gracz1.pobierzPunkty();
+    int liczba = kolo->aktualnyZawodnik->pobierzPunkty();
     QString lancuch = intToStr(liczba);
     ui->labelPunkty->setText(lancuch);
 }
@@ -245,10 +246,12 @@ void OknoGlowne::on_wybierzLitere_released()
 }
 void OknoGlowne::zmianaTury()
 {
+    qDebug()<<"[void OknoGlowne::zmianaTury()]";
     kolo->tura=kolo->tura+1;
     if (kolo->tura >= kolo->nazwaTury.length())
         kolo->tura=1;
     ui->labelTura->setText("Tura numer: "+intToStr(kolo->tura)+" o nazwie: "+ kolo->nazwaTury.at(kolo->tura));
+    qDebug()<<"[void OknoGlowne::zmianaTury()--END]";
 }
 
 int OknoGlowne::szukajLiter(QString temp,QChar szukana)
@@ -338,7 +341,7 @@ void OknoGlowne::on_buttonLosuj_released()
     ui->labelWylosowano->setText("Wylosowano na kole: " + kolo->nagrody.at(kolo->wylosowanaPozycja));
     if (kolo->czyTraciKolejke())
     {
-        int liczba = kolo->gracz1.pobierzPunkty();
+        int liczba = kolo->aktualnyZawodnik->pobierzPunkty();
         QString lancuch = intToStr(liczba);
         ui->labelPunkty->setText(lancuch);
         return;
@@ -370,7 +373,7 @@ void OknoGlowne::on_lineEditZgadnij_returnPressed()
     strzal=strzal.toUpper();
     if (temp!=strzal)
     {
-        kolo->gracz1.ustawPunkty(0);
+        kolo->aktualnyZawodnik->ustawPunkty(0);
         ui->labelPunkty->setText(0);
         QMessageBox::information(
             this,tr("ZŁY STRZAŁ!"),tr("Tym razem ci się nie udało kasujemy punkty!!"));
