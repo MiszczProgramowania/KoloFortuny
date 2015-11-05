@@ -132,9 +132,9 @@
    <widget class="QLabel" name="labelPunkty">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>260</x>
       <y>200</y>
-      <width>151</width>
+      <width>121</width>
       <height>20</height>
      </rect>
     </property>
@@ -179,6 +179,29 @@
     </property>
     <property name="text">
      <string>Tura nr 0 . Wybierz -&gt; GRA -&gt; NOWA</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelZgadnij">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Zgadnij hasło:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditZgadnij">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>231</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
   </widget>

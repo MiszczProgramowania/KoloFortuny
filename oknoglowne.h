@@ -34,7 +34,8 @@ public:
     void najpierwUruchomGre();
     void zmianaTury();
     void uwzglednijWygrana(int liczbaWystapien);
-
+    void wygranaRozgrywka();
+    void czyszczenieElementowUi();
     ~OknoGlowne();
 private slots:
     void on_actionWczytaj_triggered();
@@ -48,6 +49,8 @@ private slots:
     void on_wybranaLitera_returnPressed();
 
     void on_buttonLosuj_released();
+
+    void on_lineEditZgadnij_returnPressed();
 
 private:
     Ui::OknoGlowne *ui;

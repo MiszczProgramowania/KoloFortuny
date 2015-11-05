@@ -70,11 +70,19 @@ void OknoGlowne::najpierwZaczytajBaze()
          qDebug()<<"Nie zwrócono nic sensownego!";
     }
 }
+void OknoGlowne::czyszczenieElementowUi()
+{
+    ui->TablicaLiter->clear();
+    ui->lineEditZgadnij->clear();
+    ui->wybranaLitera->clear();
+    ui->labelPunkty->clear();
+}
 
 void OknoGlowne::on_actionNowa_triggered()
 {
     qDebug() << "[OknoGlowne::on_actionNowa_triggered()]";
     //zaciagnij sciezke hasel
+    czyszczenieElementowUi();
     plik_hasel.sciezka=plik_conf.wgraj_sciezke_do_hasel();
     plik_hasel.tekst_na_baze();
     if (plik_hasel.tekst.isEmpty())
@@ -335,7 +343,6 @@ void OknoGlowne::on_buttonLosuj_released()
         ui->labelPunkty->setText(lancuch);
         return;
     }
-
     zmianaTury();
     }
     else
@@ -347,4 +354,37 @@ void OknoGlowne::on_buttonLosuj_released()
         qDebug()<<"Najpierw ją ukończ";
     }
     qDebug()<<"[void OknoGlowne::on_buttonLosuj_released()----NULL]";
+}
+
+void OknoGlowne::on_lineEditZgadnij_returnPressed()
+{
+    QString temp = plik_hasel.baza.slowa.at(plik_hasel.nrPartii);
+    qDebug()<<"Hasło do zgadnięcia to: "<<temp;
+    QString strzal=ui->lineEditZgadnij->text();
+    if (strzal.isNull()||strzal.isEmpty())
+    {
+        ui->lineEditZgadnij->clear();
+        return;
+    }
+    temp=temp.toUpper();
+    strzal=strzal.toUpper();
+    if (temp!=strzal)
+    {
+        kolo->gracz1.ustawPunkty(0);
+        ui->labelPunkty->setText(0);
+        QMessageBox::information(
+            this,tr("ZŁY STRZAŁ!"),tr("Tym razem ci się nie udało kasujemy punkty!!"));
+        ui->lineEditZgadnij->clear();
+        return;
+    }
+    wygranaRozgrywka();
+}
+void OknoGlowne::wygranaRozgrywka()
+{
+    qDebug()<<"[void OknoGlowne::wygranaRozgrywka()]";
+
+    QMessageBox::information(
+        this,tr("WYGRAŁEŚ!"),tr("Wygrałeś gratulacje!!"));
+    on_actionNowa_triggered();
+    qDebug()<<"[void OknoGlowne::wygranaRozgrywka()---END]";
 }
