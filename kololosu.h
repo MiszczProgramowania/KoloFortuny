@@ -8,22 +8,26 @@
 class KoloLosu
 {
 private:
+    int iloscPozycji;
 
-    unsigned int iloscPozycji;
-    Gracz * listaGraczy;
+    int losowanie_gracza(int liczba);
 public:
     Gracz * aktualnyZawodnik;
+    Gracz * listaGraczy;
+    int aktualnyZawodnikIndex;
     QStringList nagrody;
     int wylosowanaPozycja;
     QStringList nazwaTury;
     int tura;
+    int liczbaGraczy;
 
     KoloLosu();
+    KoloLosu(int liczbaGraczy);
     ~KoloLosu();
     int wygrajPunkty(int poprzedniePunkty, int wygranePunkty);
-    int bankrut();
-    int stop(int poprzedniePunkty);
-    bool czyTraciKolejke();
+
+
+
     void realizacjaWygranej(int liczbaWystapien);
     void losowaniePozycji();
 

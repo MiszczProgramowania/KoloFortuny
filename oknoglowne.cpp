@@ -1,12 +1,6 @@
 #include "oknoglowne.h"
 #include "ui_oknoglowne.h"
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QFile>
-#include <QTextStream>
-#include <QDebug>
-#include <Qtime>
-#include "formularzhasel.h"
+
 
 OknoGlowne::OknoGlowne(QWidget *parent) :
     QMainWindow(parent),
@@ -76,6 +70,18 @@ void OknoGlowne::czyszczenieElementowUi()
     ui->lineEditZgadnij->clear();
     ui->wybranaLitera->clear();
     ui->labelPunkty->clear();
+    ui->labelNazwaGracza->clear();
+}
+void OknoGlowne::aktualizacjaElementowUi()
+{
+    ui->lineEditZgadnij->clear();
+    ui->wybranaLitera->clear();
+    QString temp;
+    temp = temp.number(kolo->aktualnyZawodnik->pobierzPunkty());
+    ui->labelPunkty->setText(temp);
+    ui->labelNazwaGracza->setText(kolo->aktualnyZawodnik->pobierzNazwe());
+    ui->labelTura->setText("Tura numer: "+intToStr(kolo->tura)+" o nazwie: "+ kolo->nazwaTury.at(kolo->tura));
+    ui->labelPodpowiedz->setText("Podpowiedź: "+ plik_hasel.baza.podpowiedzi.at(plik_hasel.nrPartii));
 }
 
 void OknoGlowne::on_actionNowa_triggered()
@@ -88,7 +94,6 @@ void OknoGlowne::on_actionNowa_triggered()
     if (plik_hasel.tekst.isEmpty())
     {
        najpierwZaczytajBaze();
-
     }
     QString informacja = "Hasła zaczytane z pliku o ścieżce: \n";
     informacja.append(plik_hasel.sciezka);
@@ -116,13 +121,67 @@ void OknoGlowne::on_actionNowa_triggered()
 
     plik_hasel.nrPartii = losowanie_partii();
 
-    OknoGlowne::zakrycie_hasla(plik_hasel.baza.slowa.at(plik_hasel.nrPartii));
-    QString podpowiedz="Podpowiedź: "+plik_hasel.baza.podpowiedzi.at(plik_hasel.nrPartii);
-    OknoGlowne::inicjalizacja_podpowiedzi(podpowiedz);
-    qDebug()<<"Tworzymy KOLO";
-    kolo = new KoloLosu;
-    qDebug()<<"Tworzymy KOLO END";
-    zmianaTury();
+    zakrycie_hasla(plik_hasel.baza.slowa.at(plik_hasel.nrPartii));
+    QString podpowiedz="Podpowiedź: "+ plik_hasel.baza.podpowiedzi.at(plik_hasel.nrPartii);
+    inicjalizacja_podpowiedzi(podpowiedz);
+    qDebug()<<"Pytamy o liczbę graczy";
+
+    QMessageBox msgBox;
+    msgBox.setText("Nowa Gra!");
+    msgBox.setInformativeText("W ilu graczy?");
+    msgBox.setStandardButtons(QMessageBox::Save |QMessageBox::Open| QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.button(QMessageBox::Save)->setText("Jeden");
+    msgBox.button(QMessageBox::Open)->setText("Dwóch");
+    msgBox.button(QMessageBox::Cancel)->setText("Czterch");
+
+    int ret = msgBox.exec();
+    qDebug() << "ret wynosi: " << ret;
+    if(ret==2048)
+    {
+        qDebug()<<"Tworzymy KOLO";
+        kolo = new KoloLosu(1);
+        QString temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
+        kolo->listaGraczy[0].ustawNazwe(temp);
+        qDebug()<<"Tworzymy KOLO END";
+        zmianaTury();
+         return;
+    }
+    if (ret==8192)
+     {
+        qDebug()<<"Tworzymy KOLO";
+        kolo = new KoloLosu(2);
+        QString temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
+        kolo->listaGraczy[0].ustawNazwe(temp);
+        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 2", "Gracz nr 2:");
+        kolo->listaGraczy[1].ustawNazwe(temp);
+        qDebug()<<"Tworzymy KOLO END";
+        zmianaTury();
+        return;
+     }
+    if(ret==4194304)
+    {
+        qDebug()<<"Tworzymy KOLO";
+        kolo = new KoloLosu(4);
+        QString temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
+        kolo->listaGraczy[0].ustawNazwe(temp);
+        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 2", "Gracz nr 2:");
+        kolo->listaGraczy[1].ustawNazwe(temp);
+        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 3", "Gracz nr 3:");
+        kolo->listaGraczy[2].ustawNazwe(temp);
+        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 4", "Gracz nr 4:");
+        kolo->listaGraczy[3].ustawNazwe(temp);
+        qDebug()<<"Tworzymy KOLO END";
+        zmianaTury();
+         return;
+    }
+    else
+    {
+         qDebug()<<"Nie zwrócono nic sensownego!";
+         return;
+    }
+
 }
 int OknoGlowne::losowanie_partii()
 {
@@ -200,7 +259,48 @@ void OknoGlowne::uwzglednijWygrana(int liczbaWystapien)
     QString lancuch = intToStr(liczba);
     ui->labelPunkty->setText(lancuch);
 }
+void OknoGlowne::zmianaGracza()
+{
+    qDebug()<<"[void KoloLosu::zmianaGracza()]";
+    if(kolo->aktualnyZawodnikIndex==(kolo->liczbaGraczy-1))
+        kolo->aktualnyZawodnikIndex=0;
+    else
+        kolo->aktualnyZawodnikIndex++;
+    kolo->aktualnyZawodnik=&kolo->listaGraczy[kolo->aktualnyZawodnikIndex];
+    zmianaTury();
+    qDebug()<<"[void KoloLosu::zmianaGracza()--END]";
+}
+bool OknoGlowne::czyTraciKolejke()
+{
+    qDebug()<<"[bool KoloLosu::czyTraciKolejke()]";
+    if(kolo->wylosowanaPozycja==-1)
+    {
+        qDebug()<<"Kolo na pozycji startowej";
+        return true;
+    }
+    if (kolo->wylosowanaPozycja==0)
+    {
+        qDebug()<<"Aktualny gracz: "<< kolo->aktualnyZawodnik->pobierzNazwe() << " ZBANKRUTOWAŁ!";
+        kolo->aktualnyZawodnik->ustawPunkty(0);
+        zmianaGracza();
+        return true;
+    }
+    if (kolo->wylosowanaPozycja==4)
+    {
+        qDebug()<<"Aktualny gracz: "<< kolo->aktualnyZawodnik->pobierzNazwe() << " stracił kolejke!";
+        zmianaGracza();
+        return true;
+    }
 
+    if (kolo->wylosowanaPozycja==8)
+    {
+        qDebug()<<"Aktualny gracz: "<< kolo->aktualnyZawodnik->pobierzNazwe() << " stracił kolejke!";
+        zmianaGracza();
+        return true;
+    }
+    return false;
+    qDebug()<<"[bool KoloLosu::czyTraciKolejke()---END]";
+}
 void OknoGlowne::on_wybierzLitere_released()
 {
     if (kolo->tura==2)
@@ -230,7 +330,12 @@ void OknoGlowne::on_wybierzLitere_released()
             return;
         }
         int liczbaWystapien = szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
-        if(liczbaWystapien>0)
+        if (liczbaWystapien==0)
+        {
+            zmianaTury();
+            zmianaGracza();
+        }
+        else if(liczbaWystapien>0)
             uwzglednijWygrana(liczbaWystapien);
         ui->wybranaLitera->clear();
 
@@ -250,7 +355,7 @@ void OknoGlowne::zmianaTury()
     kolo->tura=kolo->tura+1;
     if (kolo->tura >= kolo->nazwaTury.length())
         kolo->tura=1;
-    ui->labelTura->setText("Tura numer: "+intToStr(kolo->tura)+" o nazwie: "+ kolo->nazwaTury.at(kolo->tura));
+    aktualizacjaElementowUi();
     qDebug()<<"[void OknoGlowne::zmianaTury()--END]";
 }
 
@@ -269,8 +374,11 @@ int OknoGlowne::szukajLiter(QString temp,QChar szukana)
         {
             if (szukana==temp.at(licznik))
             {
-                liczbaWystapien++;
-                ui->TablicaLiter->setItem(j,i,new QTableWidgetItem(temp.at(licznik)));
+                if (ui->TablicaLiter->item(j,i)->text()=="*")
+                {
+                    ui->TablicaLiter->setItem(j,i,new QTableWidgetItem(temp.at(licznik)));
+                    liczbaWystapien++;
+                }
             }
             licznik++;
         }
@@ -338,14 +446,9 @@ void OknoGlowne::on_buttonLosuj_released()
     if (kolo->tura==1)
     {
     kolo->losowaniePozycji();
+
     ui->labelWylosowano->setText("Wylosowano na kole: " + kolo->nagrody.at(kolo->wylosowanaPozycja));
-    if (kolo->czyTraciKolejke())
-    {
-        int liczba = kolo->aktualnyZawodnik->pobierzPunkty();
-        QString lancuch = intToStr(liczba);
-        ui->labelPunkty->setText(lancuch);
-        return;
-    }
+    czyTraciKolejke();
     zmianaTury();
     }
     else

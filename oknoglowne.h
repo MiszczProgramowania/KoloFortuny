@@ -2,10 +2,18 @@
 #define OKNOGLOWNE_H
 
 #include <QMainWindow>
+#include <QDialogButtonBox>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
+#include <Qtime>
 #include "plik.h"
 #include "bazahasel.h"
 #include "konfiguracja.h"
 #include "kololosu.h"
+#include "formularzhasel.h"
 
 namespace Ui {
 class OknoGlowne;
@@ -23,7 +31,7 @@ private:
     void zakrycie_hasla(QString temp);
     void inicjalizacja_podpowiedzi(QString temp);
     int szukajLiter(QString temp,QChar szukana);
-
+    void aktualizacjaElementowUi();
 
 public:
     KoloLosu * kolo;
@@ -33,6 +41,8 @@ public:
     void najpierwZaczytajBaze();
     void najpierwUruchomGre();
     void zmianaTury();
+    void zmianaGracza();
+    bool czyTraciKolejke();
     void uwzglednijWygrana(int liczbaWystapien);
     void wygranaRozgrywka();
     void czyszczenieElementowUi();

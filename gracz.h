@@ -1,6 +1,9 @@
 #ifndef GRACZ_H
 #define GRACZ_H
 #include <QString>
+#include <QInputDialog>
+#include <QObject>
+#include <QWidget>
 
 class Gracz
 {

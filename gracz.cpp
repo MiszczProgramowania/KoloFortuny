@@ -2,9 +2,13 @@
 
 Gracz::Gracz()
 {
-    nazwa="Anonim";
+
     punkty=0;
     wygral=false;
+
+
+    if (nazwa.isEmpty()||nazwa.isNull())
+       nazwa="Anonim";
 }
 void Gracz::ustawNazwe(QString n)
 {
