@@ -14,6 +14,9 @@
 #include "konfiguracja.h"
 #include "kololosu.h"
 #include "formularzhasel.h"
+#include <QPixmap>
+#include <QPainter>
+#include <QThread>
 
 namespace Ui {
 class OknoGlowne;
@@ -25,14 +28,14 @@ class OknoGlowne : public QMainWindow
 private:
     Konfiguracja plik_conf;
     BazaHasel plik_hasel;
-
+    QImage obrazekKola;
     int losowanie_partii();
     void odkrycie_hasla(QString temp);
     void zakrycie_hasla(QString temp);
     void inicjalizacja_podpowiedzi(QString temp);
     int szukajLiter(QString temp,QChar szukana);
     void aktualizacjaElementowUi();
-
+    void obrotGrafiki(int wylosowanyObrot);
 public:
     KoloLosu * kolo;
     explicit OknoGlowne(QWidget *parent = 0);

@@ -11,6 +11,8 @@ OknoGlowne::OknoGlowne(QWidget *parent) :
     if(ui->TablicaLiter->isSortingEnabled())
         ui->TablicaLiter->setSortingEnabled(false);
     ui->wybierzLitere->setAutoDefault(true);
+
+    ui->labelGrafika->setPixmap(QPixmap(":/img/kolo"));
 }
 
 OknoGlowne::~OknoGlowne()
@@ -437,6 +439,7 @@ QString OknoGlowne::intToStr(int n)
 }
 void OknoGlowne::on_buttonLosuj_released()
 {
+
     qDebug()<<"[void OknoGlowne::on_buttonLosuj_released()]";
     if (kolo==NULL)
     {
@@ -446,7 +449,7 @@ void OknoGlowne::on_buttonLosuj_released()
     if (kolo->tura==1)
     {
     kolo->losowaniePozycji();
-
+    OknoGlowne::obrotGrafiki(30*kolo->wylosowanaPozycja+15);
     ui->labelWylosowano->setText("Wylosowano na kole: " + kolo->nagrody.at(kolo->wylosowanaPozycja));
     czyTraciKolejke();
     zmianaTury();
@@ -494,3 +497,43 @@ void OknoGlowne::wygranaRozgrywka()
     on_actionNowa_triggered();
     qDebug()<<"[void OknoGlowne::wygranaRozgrywka()---END]";
 }
+void OknoGlowne::obrotGrafiki(int wylosowanyObrot)
+{
+    int obrot=360;
+    int licznik=10;
+    bool wyjscie=false;
+    while(licznik>0&&wyjscie==false)
+    {
+        if (licznik==1&&obrot==wylosowanyObrot)
+        {
+            //wychodzimy gdy osiagniemy wylosowany obort w ostatniej iteracji licznika
+            wyjscie=true;
+            break;
+        }
+        QApplication::processEvents(); //tworzymy nowy proces
+        QPixmap ship(":/img/kolo"); //zaczytujemy obrazek
+        QPixmap rotate(ship.size());//nierozumiem tego ale jest w poradnikach
+
+        QPainter temp(&rotate);//nierozumiem tego ale jest w poradnikach
+
+        temp.setRenderHint(QPainter::Antialiasing);
+        temp.setRenderHint(QPainter::SmoothPixmapTransform);
+
+        temp.translate(rotate.size().width()/2, rotate.size().height()/2);
+        temp.rotate(obrot);
+        temp.translate(-rotate.size().width()/2, -rotate.size().height()/2);
+
+        temp.drawPixmap(0,0,ship);
+
+        ui->labelGrafika->setPixmap(rotate);
+        obrot=obrot-licznik;
+        if (obrot<0)
+        {
+            obrot=360;
+            licznik--;
+        }
+        temp.end();
+    }
+
+}
+
