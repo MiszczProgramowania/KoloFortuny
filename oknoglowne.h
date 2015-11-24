@@ -65,6 +65,8 @@ private slots:
 
     void on_lineEditZgadnij_returnPressed();
 
+    void on_actionEdytuj_triggered();
+
 private:
     Ui::OknoGlowne *ui;
 };

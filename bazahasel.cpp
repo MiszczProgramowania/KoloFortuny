@@ -68,17 +68,21 @@ void BazaHasel::tekst_na_baze()
 QString BazaHasel::baza_na_tekst()
 {
     qDebug() << "[BazaHasel::baza_na_tekst()]";
-    QStringList lista = baza.slowa;
-    qDebug() << "Rozpoczynam łączenie";
-    for (int i=0;i<lista.length();i++)
+    QStringList lista;
+    qDebug() << "Rozpoczynam łączenie, baza.slowa wynosi: ";
+    qDebug() << baza.slowa;
+    for (int i=0;i<baza.slowa.length();i++)
     {
         QString polaczenie = baza.slowa.at(i);
         polaczenie.insert(polaczenie.length(),separator);
         polaczenie.insert(polaczenie.length(),baza.podpowiedzi.at(i));
-        lista.replace(i,polaczenie);
+        lista.append(polaczenie);
         qDebug() << "Połączony obiekt nr "<<i<<" = "<<lista.at(i);
     }
     qDebug() << "Kończe łączenie";
     QString temp = lista.join("\n");
+    qDebug() << "Temp wynosi: ";
+    qDebug()<<temp;
+    qDebug() << "[BazaHasel::baza_na_tekst()]--END";
     return temp;
 }

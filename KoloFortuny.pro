@@ -35,7 +35,7 @@ FORMS    += oknoglowne.ui \
 DISTFILES += \
     readme.txt \
     konfiguracja.dat \
-    img/kolo.jpg
+    img/kolo.png
 
 RESOURCES += \
     grafika.qrc

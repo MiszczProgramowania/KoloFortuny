@@ -7,13 +7,15 @@ void Plik::zapis_do_pliku()
 {
     qDebug() << "[Plik::zapis_do_pliku()]";
     QFile plik(sciezka);
-    if(!plik.open(QFile::WriteOnly | QFile::Text))
+    if(!plik.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
     {
         qDebug() << "Nie można było otworzyć pliku o zapisu\n";
         return;
     }
-
     QTextStream out (&plik);
+    qDebug()<<"Wpisuje następujący tekst do pliku: "<<endl;
+    qDebug()<<tekst;
+
     out << tekst;
 
     qDebug() << "Wczytano Następujące Dane z Pliku:\n";
@@ -30,7 +32,7 @@ QString Plik::odczyt_z_pliku()
     QFile plik(sciezka);
     tekst="";
 
-    if(!plik.open(QFile::ReadOnly | QFile::Text))
+    if(!plik.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << "Nie można było otworzyc pliku do odczytu\n";
 

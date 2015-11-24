@@ -8,6 +8,7 @@ FormularzHasel::FormularzHasel(QWidget *parent) :
     ui->setupUi(this);
     QList<QAbstractButton *> lista = ui->buttonBox->buttons();
     lista.at(0)->setText("Zapisz jako");
+
     lista.at(1)->setText("Wyjdź");
 }
 
@@ -16,20 +17,11 @@ FormularzHasel::~FormularzHasel()
     delete ui;
 }
 
-void FormularzHasel::on_tablicaSlow_cellChanged(int row, int column)
-{
-    qDebug() <<"[FormularzHasel::on_tablicaSlow_cellChanged(int row, int column)]";
-    if (row==0&&column==0)
-    {
-        ui->tablicaSlow->insertRow(row);
-    }
-    qDebug() <<"[FormularzHasel::on_tablicaSlow_cellChanged(int row, int column)] -> END";
-}
-
 void FormularzHasel::on_buttonBox_accepted()
 {
-    qDebug()<<"FormularzHasel::on_buttonBox_accepted()";
-
+    qDebug()<<"[FormularzHasel::on_buttonBox_accepted()]";
+    tymczasowa.baza.slowa.clear();
+    tymczasowa.baza.podpowiedzi.clear();
     for (int i=1;i<(ui->tablicaSlow->rowCount());i++)
     {
 
@@ -53,10 +45,45 @@ void FormularzHasel::on_buttonBox_accepted()
                 tr("Zapisz plik"), //tytuł okna
                 QString(), //ścieżka do pliku (opcjonalna w tym momencie funkcja generująca NULL)
                 "Plik Tekstowy(*.txt);Wszystkie(*.*)"); //to czego szukamy w formularzu
-
+    tymczasowa.tekst="";
     tymczasowa.tekst=tymczasowa.baza_na_tekst();
     qDebug() << "Wczytany tekst: " << tymczasowa.tekst;
     tymczasowa.zapis_do_pliku();
     qDebug() << "zapisywanie END";
     qDebug()<<"FormularzHasel::on_buttonBox_accepted()->>END";
+}
+void FormularzHasel::zaczytajFormularz()
+{
+    qDebug()<<"[void FormularzHasel::zaczytajFormularz()]";
+    qDebug()<<"tymczasowa.baza.slowa po exec"<< tymczasowa.baza.slowa;
+
+
+    for(int j=0;j<ui->tablicaSlow->rowCount();j++)
+    {
+        ui->tablicaSlow->removeRow(j);
+    }
+    qDebug()<<"Liczba kolumn wynosi: "<<ui->tablicaSlow->columnCount()<<" liczba wierszy: "<<ui->tablicaSlow->rowCount();
+
+    int i;
+    for (i=0;i<tymczasowa.baza.slowa.length();i++)
+    {
+        qDebug()<<"Tworze wiersz nr: "<< i;
+        ui->tablicaSlow->insertRow(i);
+        qDebug()<<"Ustawiam slowo nr: "<< i<<": "<<tymczasowa.baza.slowa.at(i);
+        QTableWidgetItem *newItemSlowo = new QTableWidgetItem(tymczasowa.baza.slowa.at(i));
+        ui->tablicaSlow->setItem(i,0,newItemSlowo);
+        qDebug()<<"Ustawiam podpowiedz nr: "<< i<<": "<<tymczasowa.baza.podpowiedzi.at(i);
+        QTableWidgetItem *newItemPodpowiedz = new QTableWidgetItem(tymczasowa.baza.podpowiedzi.at(i));
+        ui->tablicaSlow->setItem(i,1,newItemPodpowiedz);
+    }
+    ui->tablicaSlow->insertRow(0);
+    ui->tablicaSlow->removeRow(i+1);
+
+    qDebug()<<"[void FormularzHasel::zaczytajFormularz()---END]";
+
+}
+
+void FormularzHasel::on_pushButtonNowyWiersz_released()
+{
+    ui->tablicaSlow->insertRow(0);
 }

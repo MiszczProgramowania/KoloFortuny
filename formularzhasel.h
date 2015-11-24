@@ -20,10 +20,13 @@ public:
     explicit FormularzHasel(QWidget *parent = 0);
     ~FormularzHasel();
     BazaHasel tymczasowa;
+    void zaczytajFormularz();
+
 private slots:
 
-    void on_tablicaSlow_cellChanged(int row, int column);
     void on_buttonBox_accepted();
+
+    void on_pushButtonNowyWiersz_released();
 
 private:
     Ui::FormularzHasel *ui;

@@ -253,6 +253,7 @@
     </property>
     <addaction name="actionUtw_rz"/>
     <addaction name="actionWczytaj"/>
+    <addaction name="actionEdytuj"/>
    </widget>
    <addaction name="menuGra"/>
    <addaction name="menuHasla"/>
@@ -276,6 +277,11 @@
   <action name="actionUtw_rz">
    <property name="text">
     <string>Utwórz</string>
+   </property>
+  </action>
+  <action name="actionEdytuj">
+   <property name="text">
+    <string>Edytuj</string>
    </property>
   </action>
  </widget>

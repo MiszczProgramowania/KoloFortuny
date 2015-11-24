@@ -96,6 +96,7 @@ void OknoGlowne::on_actionNowa_triggered()
     if (plik_hasel.tekst.isEmpty())
     {
        najpierwZaczytajBaze();
+       return;
     }
     QString informacja = "Hasła zaczytane z pliku o ścieżce: \n";
     informacja.append(plik_hasel.sciezka);
@@ -537,3 +538,23 @@ void OknoGlowne::obrotGrafiki(int wylosowanyObrot)
 
 }
 
+void OknoGlowne::on_actionEdytuj_triggered()
+{
+    plik_hasel.sciezka=plik_conf.wgraj_sciezke_do_hasel();
+    plik_hasel.tekst_na_baze();
+    if (plik_hasel.tekst.isEmpty())
+    {
+         on_actionWczytaj_triggered();
+         plik_hasel.tekst_na_baze();
+    }
+    FormularzHasel tworzenie_hasel;
+    tworzenie_hasel.tymczasowa.baza.slowa=plik_hasel.baza.slowa;
+    qDebug()<<"tworzenie_hasel.tymczasowa.baza.slowa przed exec() wynosi "<<tworzenie_hasel.tymczasowa.baza.slowa;
+    tworzenie_hasel.tymczasowa.baza.podpowiedzi=plik_hasel.baza.podpowiedzi;
+    tworzenie_hasel.zaczytajFormularz();
+    tworzenie_hasel.exec();
+
+    plik_conf.ustaw_sciezke_do_hasel(tworzenie_hasel.tymczasowa.sciezka);
+    plik_conf.konfiguracja_na_tekst();
+
+}
