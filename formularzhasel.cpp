@@ -22,16 +22,16 @@ void FormularzHasel::on_buttonBox_accepted()
     qDebug()<<"[FormularzHasel::on_buttonBox_accepted()]";
     tymczasowa.baza.slowa.clear();
     tymczasowa.baza.podpowiedzi.clear();
-    for (int i=1;i<(ui->tablicaSlow->rowCount());i++)
+    for (int i=0;i<(ui->tablicaSlow->rowCount());i++)
     {
 
         tymczasowa.baza.slowa << ui->tablicaSlow->item(i,0)->text();
-        qDebug() <<"Wpisuje do bazy haseł: " << tymczasowa.baza.slowa.at(i-1);
+        qDebug() <<"Wpisuje do bazy haseł: " << tymczasowa.baza.slowa.at(i);
 
         if (ui->tablicaSlow->item(i,1)!=0)
         {
             tymczasowa.baza.podpowiedzi << ui->tablicaSlow->item(i,1)->text();
-            qDebug() <<"Wpisuje do bazy podpowiedzi: " << tymczasowa.baza.podpowiedzi.at(i-1);
+            qDebug() <<"Wpisuje do bazy podpowiedzi: " << tymczasowa.baza.podpowiedzi.at(i);
         }
         else
         {
