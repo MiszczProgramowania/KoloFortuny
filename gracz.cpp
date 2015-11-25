@@ -55,10 +55,8 @@ bool Gracz::czy_samogloska(QChar temp)
     }
     return czy;
 }
-
-bool Gracz::moze_kupic(int pozycja)
+int Gracz::jakaCena(int pozycja)
 {
-    qDebug()<<"[bool Gracz::moze_kupic(int pozycja)]";
     int cena;
     if (pozycja==0)
     {
@@ -111,73 +109,43 @@ bool Gracz::moze_kupic(int pozycja)
     else
     {
         qDebug()<<"Błąd pozycja niee jest w predziale 0-11";
+        return -1;
     }
+    return cena;
+}
+
+bool Gracz::moze_kupic(int pozycja)
+{
+    qDebug()<<"[bool Gracz::moze_kupic(int pozycja)]";
+    int cena;
+    cena=jakaCena(pozycja);
     if (punkty<cena)
         return false;
     return true;
-        qDebug()<<"[bool Gracz::moze_kupic(int pozycja)]---END";
+    qDebug()<<"[bool Gracz::moze_kupic(int pozycja)]---END";
 }
 void Gracz::kup_samogloske(int pozycja)
 {
     int cena;
-    if (pozycja==0)
-    {
-        qDebug()<<"POZYCJA BANKRUT BŁĄD";
-    }
-    if (pozycja==1)
-    {
-        cena==400;
-    }
-    else if (pozycja==2)
-    {
-        cena==2500;
-    }
-    else if (pozycja==3)
-    {
-        cena==250;
-    }
-    else if (pozycja==4)
-    {
-        qDebug()<<"POZYCJA STOP BŁĄD";
-    }
-    else if (pozycja==5)
-    {
-        cena==400;
-    }
-    else if (pozycja==6)
-    {
-        cena==200;
-    }
-    else if (pozycja==7)
-    {
-        cena==100;
-    }
-    else if (pozycja==8)
-    {
-        qDebug()<<"POZYCJA STOP BŁĄD";
-    }
-    else if (pozycja==9)
-    {
-        cena==150;
-    }
-    else if (pozycja==10)
-    {
-        cena==250;
-    }
-    else if (pozycja==11)
-    {
-        cena==300;
-    }
-    else
-    {
-        qDebug()<<"Błąd pozycja niee jest w predziale 0-11";
-    }
+    cena=jakaCena(pozycja);
     punkty=punkty-cena;
     if (punkty<0)
     {
         qDebug()<<"Błąd: Punkty są mniejsze od 0?";
-        punkty=0;
+        punkty=-1;
     }
     else
         return;
+}
+void Gracz::niezgadl(int pozycja)
+{
+    qDebug()<<"[void Gracz::niezgadl(int pozycja)]";
+    int cena;
+    cena=jakaCena(pozycja);
+    punkty=punkty-cena;
+    if (punkty<0)
+    {
+        punkty=0;
+    }
+    qDebug()<<"[void Gracz::niezgadl(int pozycja)]---END";
 }

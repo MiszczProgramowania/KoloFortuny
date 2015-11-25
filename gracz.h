@@ -12,7 +12,7 @@ private:
 QString nazwa;
 int punkty;
 bool wygral;
-
+int jakaCena(int pozycja);
 public:
     Gracz();
 
@@ -22,6 +22,7 @@ public:
     bool czy_samogloska(QChar temp);
     bool moze_kupic(int pozycja);
     void kup_samogloske(int pozycja);
+    void niezgadl(int pozycja);
     QString pobierzNazwe();
     int pobierzPunkty();
     bool sprawdzCzyWygral();

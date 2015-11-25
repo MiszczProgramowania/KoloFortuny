@@ -353,6 +353,7 @@ void OknoGlowne::on_wybierzLitere_released()
         int liczbaWystapien = szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
         if (liczbaWystapien==0)
         {
+            kolo->aktualnyZawodnik->niezgadl(kolo->wylosowanaPozycja);
             zmianaTury();
             zmianaGracza();
         }
