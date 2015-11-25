@@ -155,10 +155,15 @@ void OknoGlowne::on_actionNowa_triggered()
      {
         qDebug()<<"Tworzymy KOLO";
         kolo = new KoloLosu(2);
-        QString temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
+        QString temp,temp2;
+        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
         kolo->listaGraczy[0].ustawNazwe(temp);
-        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 2", "Gracz nr 2:");
-        kolo->listaGraczy[1].ustawNazwe(temp);
+        do
+        {
+            temp2= QInputDialog::getText(this,"Nazwa użytkownika nr 2", "Gracz nr 2:");
+        }
+        while(temp==temp2);
+        kolo->listaGraczy[1].ustawNazwe(temp2);
         qDebug()<<"Tworzymy KOLO END";
         zmianaTury();
         return;
@@ -167,17 +172,29 @@ void OknoGlowne::on_actionNowa_triggered()
     {
         qDebug()<<"Tworzymy KOLO";
         kolo = new KoloLosu(4);
-        QString temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
+        QString temp,temp2,temp3,temp4;
+        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
         kolo->listaGraczy[0].ustawNazwe(temp);
-        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 2", "Gracz nr 2:");
-        kolo->listaGraczy[1].ustawNazwe(temp);
-        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 3", "Gracz nr 3:");
-        kolo->listaGraczy[2].ustawNazwe(temp);
-        temp= QInputDialog::getText(this,"Nazwa użytkownika nr 4", "Gracz nr 4:");
-        kolo->listaGraczy[3].ustawNazwe(temp);
+        do
+        {
+            temp2= QInputDialog::getText(this,"Nazwa użytkownika nr 2", "Gracz nr 2:");
+        }
+        while(temp2==temp);
+        kolo->listaGraczy[1].ustawNazwe(temp2);
+        do
+        {
+            temp3= QInputDialog::getText(this,"Nazwa użytkownika nr 3", "Gracz nr 3:");
+        }
+        while(temp3==temp||temp3==temp2);
+        kolo->listaGraczy[2].ustawNazwe(temp3);
+        do{
+            temp4= QInputDialog::getText(this,"Nazwa użytkownika nr 4", "Gracz nr 4:");
+        }
+        while(temp4==temp||temp4==temp2||temp4==temp3);
+        kolo->listaGraczy[3].ustawNazwe(temp4);
         qDebug()<<"Tworzymy KOLO END";
         zmianaTury();
-         return;
+        return;
     }
     else
     {
