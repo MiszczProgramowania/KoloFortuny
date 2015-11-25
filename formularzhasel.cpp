@@ -8,7 +8,6 @@ FormularzHasel::FormularzHasel(QWidget *parent) :
     ui->setupUi(this);
     QList<QAbstractButton *> lista = ui->buttonBox->buttons();
     lista.at(0)->setText("Zapisz jako");
-
     lista.at(1)->setText("Wyjdź");
 }
 
@@ -22,9 +21,9 @@ void FormularzHasel::on_buttonBox_accepted()
     qDebug()<<"[FormularzHasel::on_buttonBox_accepted()]";
     tymczasowa.baza.slowa.clear();
     tymczasowa.baza.podpowiedzi.clear();
+    wyczyscPuste();
     for (int i=0;i<(ui->tablicaSlow->rowCount());i++)
     {
-
         tymczasowa.baza.slowa << ui->tablicaSlow->item(i,0)->text();
         qDebug() <<"Wpisuje do bazy haseł: " << tymczasowa.baza.slowa.at(i);
 
@@ -57,7 +56,6 @@ void FormularzHasel::zaczytajFormularz()
     qDebug()<<"[void FormularzHasel::zaczytajFormularz()]";
     qDebug()<<"tymczasowa.baza.slowa po exec"<< tymczasowa.baza.slowa;
 
-
     for(int j=0;j<ui->tablicaSlow->rowCount();j++)
     {
         ui->tablicaSlow->removeRow(j);
@@ -76,7 +74,7 @@ void FormularzHasel::zaczytajFormularz()
         QTableWidgetItem *newItemPodpowiedz = new QTableWidgetItem(tymczasowa.baza.podpowiedzi.at(i));
         ui->tablicaSlow->setItem(i,1,newItemPodpowiedz);
     }
-    ui->tablicaSlow->insertRow(0);
+
     ui->tablicaSlow->removeRow(i+1);
 
     qDebug()<<"[void FormularzHasel::zaczytajFormularz()---END]";
@@ -86,4 +84,26 @@ void FormularzHasel::zaczytajFormularz()
 void FormularzHasel::on_pushButtonNowyWiersz_released()
 {
     ui->tablicaSlow->insertRow(0);
+}
+void FormularzHasel::wyczyscPuste()
+{
+    int licznik = ui->tablicaSlow->rowCount();
+    qDebug()<<"[void FormularzHasel::wyczyscPuste()]";
+    for(int i=0;i<licznik;i++)
+    {
+        qDebug()<<"iteracja nr: "<<i;
+
+        if (ui->tablicaSlow->item(i,0)==0)
+        {
+             qDebug()<<"Usuwam nr: "<<i;
+             ui->tablicaSlow->removeRow(i);
+             i--;
+             licznik--;
+        }
+        else
+        {
+            qDebug()<<ui->tablicaSlow->item(i,0)->text();
+        }
+    }
+    qDebug()<<"[void FormularzHasel::wyczyscPuste()--END]";
 }

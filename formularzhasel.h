@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QDebug>
 #include <QPushButton>
+#include <QTableWidget>
 #include "bazahasel.h"
 #include <QFileDialog>
 
@@ -15,7 +16,7 @@ class FormularzHasel : public QDialog
 {
     Q_OBJECT
 private:
-
+    void wyczyscPuste();
 public:
     explicit FormularzHasel(QWidget *parent = 0);
     ~FormularzHasel();
