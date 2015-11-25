@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     konfiguracja.cpp \
     formularzhasel.cpp \
     gracz.cpp \
-    kololosu.cpp
+    kololosu.cpp \
+    dialogwygranej.cpp
 
 HEADERS  += oknoglowne.h \
     plik.h \
@@ -27,10 +28,12 @@ HEADERS  += oknoglowne.h \
     konfiguracja.h \
     formularzhasel.h \
     gracz.h \
-    kololosu.h
+    kololosu.h \
+    dialogwygranej.h
 
 FORMS    += oknoglowne.ui \
-    formularzhasel.ui
+    formularzhasel.ui \
+    dialogwygranej.ui
 
 DISTFILES += \
     readme.txt \

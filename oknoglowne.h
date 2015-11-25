@@ -14,6 +14,7 @@
 #include "konfiguracja.h"
 #include "kololosu.h"
 #include "formularzhasel.h"
+#include "dialogwygranej.h"
 #include <QPixmap>
 #include <QPainter>
 #include <QThread>
@@ -66,6 +67,8 @@ private slots:
     void on_lineEditZgadnij_returnPressed();
 
     void on_actionEdytuj_triggered();
+
+    void on_actionLista_zwyci_zc_w_triggered();
 
 private:
     Ui::OknoGlowne *ui;

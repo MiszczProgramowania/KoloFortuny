@@ -73,6 +73,7 @@ void OknoGlowne::czyszczenieElementowUi()
     ui->wybranaLitera->clear();
     ui->labelPunkty->clear();
     ui->labelNazwaGracza->clear();
+    ui->listWidgetGracze->clear();
 }
 void OknoGlowne::aktualizacjaElementowUi()
 {
@@ -84,6 +85,21 @@ void OknoGlowne::aktualizacjaElementowUi()
     ui->labelNazwaGracza->setText(kolo->aktualnyZawodnik->pobierzNazwe());
     ui->labelTura->setText("Tura numer: "+intToStr(kolo->tura)+" o nazwie: "+ kolo->nazwaTury.at(kolo->tura));
     ui->labelPodpowiedz->setText("Podpowiedź: "+ plik_hasel.baza.podpowiedzi.at(plik_hasel.nrPartii));
+    ui->listWidgetGracze->clear();
+    for(int i=0;i<kolo->liczbaGraczy;i++)
+    {
+       ui->listWidgetGracze->addItem(kolo->listaGraczy[i].pobierzNazwe()+"\n"+ QString::number(kolo->listaGraczy[i].pobierzPunkty()));
+    }
+    if ((kolo->aktualnyZawodnikIndex >= kolo->liczbaGraczy) && (kolo->aktualnyZawodnikIndex<0 ))
+    {
+        qDebug()<<"AKTUALNY ZAWODNIK Z POZA INDEXU (BŁĄD)";
+    }
+    else
+    {
+        QColor zaznaczenie;
+        zaznaczenie.setRgb(0,153,255);
+        ui->listWidgetGracze->item(kolo->aktualnyZawodnikIndex)->setBackgroundColor(zaznaczenie);
+    }
 }
 
 void OknoGlowne::on_actionNowa_triggered()
@@ -531,7 +547,9 @@ void OknoGlowne::wygranaRozgrywka()
 
     QMessageBox::information(
         this,tr("WYGRAŁEŚ!"),tr("Wygrałeś gratulacje!!"));
-    on_actionNowa_triggered();
+    plik_conf.listaWygranych=plik_conf.listaWygranych+kolo->aktualnyZawodnik->pobierzNazwe()+":"+QString::number(kolo->aktualnyZawodnik->pobierzPunkty())+",";
+    plik_conf.konfiguracja_na_tekst();
+    on_actionLista_zwyci_zc_w_triggered();
     qDebug()<<"[void OknoGlowne::wygranaRozgrywka()---END]";
 }
 void OknoGlowne::obrotGrafiki(int wylosowanyObrot)
@@ -593,4 +611,10 @@ void OknoGlowne::on_actionEdytuj_triggered()
     plik_conf.ustaw_sciezke_do_hasel(tworzenie_hasel.tymczasowa.sciezka);
     plik_conf.konfiguracja_na_tekst();
 
+}
+
+void OknoGlowne::on_actionLista_zwyci_zc_w_triggered()
+{
+    DialogWygranej listaWygranych;
+    listaWygranych.exec();
 }

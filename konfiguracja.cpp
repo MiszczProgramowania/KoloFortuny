@@ -3,6 +3,7 @@
 Konfiguracja::Konfiguracja()
 {
     sciezka= "konfiguracja.dat";
+    listaWygranych="";
     tekst_na_konfiguracje();
 }
 QString Konfiguracja::wycinanie_parametru(QString szukana)
@@ -39,6 +40,9 @@ void Konfiguracja::tekst_na_konfiguracje()
     QString szukana = "sciezka_do_hasel";
 
     sciezka_do_hasel = wycinanie_parametru(szukana);
+    //szukamy parametru listy wygranych
+    szukana="lista_wygranych";
+    listaWygranych=wycinanie_parametru(szukana);
     return;
 }
 QString Konfiguracja::wgraj_sciezke_do_hasel()
@@ -51,6 +55,11 @@ void Konfiguracja::konfiguracja_na_tekst()
     //konfiguracja_na_tekst
     QString a = "sciezka_do_hasel=";
     a.append(sciezka_do_hasel);
+    a.append("\n");
+
+    //lista_wygranych
+    a.append("lista_wygranych=");
+    a.append(listaWygranych);
     a.append("\n");
     tekst = a;
     zapis_do_pliku();

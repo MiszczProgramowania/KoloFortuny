@@ -6,25 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
+    <width>552</width>
     <height>402</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>402</width>
+    <width>552</width>
     <height>402</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>402</width>
+    <width>552</width>
     <height>402</height>
    </size>
   </property>
   <property name="baseSize">
    <size>
-    <width>402</width>
+    <width>552</width>
     <height>402</height>
    </size>
   </property>
@@ -133,7 +133,7 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>200</y>
+      <y>180</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -145,8 +145,8 @@
    <widget class="QPushButton" name="buttonLosuj">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>170</y>
+      <x>10</x>
+      <y>300</y>
       <width>141</width>
       <height>23</height>
      </rect>
@@ -158,8 +158,8 @@
    <widget class="QLabel" name="labelWylosowano">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>150</y>
+      <x>20</x>
+      <y>270</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -184,8 +184,8 @@
    <widget class="QLabel" name="labelZgadnij">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>180</y>
+      <x>130</x>
+      <y>150</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -198,7 +198,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>200</y>
+      <y>180</y>
       <width>231</width>
       <height>20</height>
      </rect>
@@ -207,8 +207,8 @@
    <widget class="QLabel" name="labelNazwaGracza">
     <property name="geometry">
      <rect>
-      <x>276</x>
-      <y>0</y>
+      <x>260</x>
+      <y>150</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -220,8 +220,8 @@
    <widget class="QLabel" name="labelGrafika">
     <property name="geometry">
      <rect>
-      <x>16</x>
-      <y>232</y>
+      <x>160</x>
+      <y>220</y>
       <width>381</width>
       <height>131</height>
      </rect>
@@ -230,13 +230,42 @@
      <string/>
     </property>
    </widget>
+   <widget class="QListWidget" name="listWidgetGracze">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>40</y>
+      <width>131</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelListaGraczy">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>10</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Lista Graczy i punktacja</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>402</width>
+     <width>552</width>
      <height>21</height>
     </rect>
    </property>
@@ -255,8 +284,15 @@
     <addaction name="actionWczytaj"/>
     <addaction name="actionEdytuj"/>
    </widget>
+   <widget class="QMenu" name="menuInne">
+    <property name="title">
+     <string>Inne</string>
+    </property>
+    <addaction name="actionLista_zwyci_zc_w"/>
+   </widget>
    <addaction name="menuGra"/>
    <addaction name="menuHasla"/>
+   <addaction name="menuInne"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNowa">
@@ -282,6 +318,11 @@
   <action name="actionEdytuj">
    <property name="text">
     <string>Edytuj</string>
+   </property>
+  </action>
+  <action name="actionLista_zwyci_zc_w">
+   <property name="text">
+    <string>lista zwycięzców</string>
    </property>
   </action>
  </widget>
