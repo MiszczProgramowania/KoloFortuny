@@ -332,6 +332,24 @@ void OknoGlowne::on_wybierzLitere_released()
             ui->wybranaLitera->clear();
             return;
         }
+
+        if(kolo->aktualnyZawodnik->czy_samogloska(szukana))
+        {
+            if(kolo->aktualnyZawodnik->moze_kupic(kolo->wylosowanaPozycja))
+            {
+                kolo->aktualnyZawodnik->kup_samogloske(kolo->wylosowanaPozycja);
+                aktualizacjaElementowUi();
+            }
+            else
+            {
+                QMessageBox::warning(
+                            this,
+                            tr("Brak środków"),
+                            "Brak środków na kupno samogłoski!\nWybierz spółgłoskę"
+                            );
+                return;
+            }
+        }
         int liczbaWystapien = szukajLiter(plik_hasel.baza.slowa.at(plik_hasel.nrPartii),szukana);
         if (liczbaWystapien==0)
         {

@@ -1,6 +1,5 @@
 TODOLIST
 
-2.Możliwość „kupowania” samogłosek: za cenę wylosowaną kołem fortuny.
 3.Odejmuje mu się z konta, jeśli nie zgadł litery.
 4.Bankrut jeśli próbował zgadywać i mu się nie udało.
 5.Generowanie dźwięków przy danych wydarzeniach (np. dźwięk kręcącego koła itp.).

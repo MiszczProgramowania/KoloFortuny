@@ -4,6 +4,7 @@
 #include <QInputDialog>
 #include <QObject>
 #include <QWidget>
+#include <QDebug>
 
 class Gracz
 {
@@ -18,7 +19,9 @@ public:
     void ustawNazwe(QString n);
     void ustawPunkty(int p);
     void ustawWygral(bool w);
-
+    bool czy_samogloska(QChar temp);
+    bool moze_kupic(int pozycja);
+    void kup_samogloske(int pozycja);
     QString pobierzNazwe();
     int pobierzPunkty();
     bool sprawdzCzyWygral();
