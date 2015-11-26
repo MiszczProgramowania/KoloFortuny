@@ -8,6 +8,7 @@ DialogWygranej::DialogWygranej(QWidget *parent) :
     ui->setupUi(this);
 
     wyswietlWygranych();
+    poukladajWygranych();
 }
 
 DialogWygranej::~DialogWygranej()
@@ -32,17 +33,24 @@ bool DialogWygranej::wyswietlWygranych()
         temp2=iteracja.split(":");
         qDebug()<<"temp2.at(0);"<<temp2.at(0);
         qDebug()<<"temp2.at(1);"<<temp2.at(1);
+        int temp3=temp2.at(1).toInt();
         ui->tableWidgetWygrani->insertRow(i);
         QTableWidgetItem * x = new QTableWidgetItem(temp2.at(0));
         qDebug()<<"x wynosi: "<<x->text();
         ui->tableWidgetWygrani->setItem(i,0,x);
 
-        QTableWidgetItem * y = new QTableWidgetItem(temp2.at(1));
+        QTableWidgetItem * y= new QTableWidgetItem();
         qDebug()<<"y wynosi: "<<y->text();
         ui->tableWidgetWygrani->setItem(i,1,y);
+        ui->tableWidgetWygrani->item(i,1)->setData(Qt::DisplayRole,temp3);
         i++;
 
     }
 qDebug()<<"[bool DialogWygranej::wyswietlWygranych()]---END";
     return true;
+}
+
+void DialogWygranej::poukladajWygranych()
+{
+    ui->tableWidgetWygrani->sortItems(1,Qt::DescendingOrder);
 }

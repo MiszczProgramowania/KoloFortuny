@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     formularzhasel.cpp \
     gracz.cpp \
     kololosu.cpp \
-    dialogwygranej.cpp
+    dialogwygranej.cpp \
+    kontrolerdzwieku.cpp
 
 HEADERS  += oknoglowne.h \
     plik.h \
@@ -29,7 +30,8 @@ HEADERS  += oknoglowne.h \
     formularzhasel.h \
     gracz.h \
     kololosu.h \
-    dialogwygranej.h
+    dialogwygranej.h \
+    kontrolerdzwieku.h
 
 FORMS    += oknoglowne.ui \
     formularzhasel.ui \

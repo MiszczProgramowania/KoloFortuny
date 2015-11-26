@@ -546,10 +546,11 @@ void OknoGlowne::wygranaRozgrywka()
     qDebug()<<"[void OknoGlowne::wygranaRozgrywka()]";
 
     QMessageBox::information(
-        this,tr("WYGRAŁEŚ!"),tr("Wygrałeś gratulacje!!"));
+    this,tr("WYGRAŁEŚ!"),tr("Wygrałeś gratulacje!!"));
     plik_conf.listaWygranych=plik_conf.listaWygranych+kolo->aktualnyZawodnik->pobierzNazwe()+":"+QString::number(kolo->aktualnyZawodnik->pobierzPunkty())+",";
     plik_conf.konfiguracja_na_tekst();
     on_actionLista_zwyci_zc_w_triggered();
+    on_actionNowa_triggered();
     qDebug()<<"[void OknoGlowne::wygranaRozgrywka()---END]";
 }
 void OknoGlowne::obrotGrafiki(int wylosowanyObrot)

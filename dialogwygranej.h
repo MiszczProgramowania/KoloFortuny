@@ -21,12 +21,7 @@ public:
 private:
     Ui::DialogWygranej *ui;
     Konfiguracja dane;
-    struct Wygrany
-    {
-        QString nazwa;
-        int punkty;
-
-    };
+    void poukladajWygranych();
 };
 
 #endif // DIALOGWYGRANEJ_H
