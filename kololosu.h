@@ -4,12 +4,12 @@
 #include <QList>
 #include <QDebug>
 #include "gracz.h"
-
+#include "kontrolerdzwieku.h"
 class KoloLosu
 {
 private:
     int iloscPozycji;
-
+    KontrolerDzwieku dzwiek;
     int losowanie_gracza(int liczba);
 public:
     Gracz * aktualnyZawodnik;

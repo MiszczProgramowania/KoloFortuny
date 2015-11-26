@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+ QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -44,3 +45,5 @@ DISTFILES += \
 
 RESOURCES += \
     grafika.qrc
+
+RC_FILE = KoloFortuny.rc

@@ -31,6 +31,9 @@
   <property name="windowTitle">
    <string>Okno Główne - Koło Fortuny</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme=":/img/icon.png"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTableWidget" name="TablicaLiter">
     <property name="geometry">

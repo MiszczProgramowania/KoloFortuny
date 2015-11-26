@@ -15,6 +15,7 @@
 #include "kololosu.h"
 #include "formularzhasel.h"
 #include "dialogwygranej.h"
+#include "kontrolerdzwieku.h"
 #include <QPixmap>
 #include <QPainter>
 #include <QThread>
@@ -30,6 +31,8 @@ private:
     Konfiguracja plik_conf;
     BazaHasel plik_hasel;
     QImage obrazekKola;
+    KontrolerDzwieku dzwiek;
+
     int losowanie_partii();
     void odkrycie_hasla(QString temp);
     void zakrycie_hasla(QString temp);

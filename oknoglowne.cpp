@@ -17,6 +17,7 @@ OknoGlowne::OknoGlowne(QWidget *parent) :
 
 OknoGlowne::~OknoGlowne()
 {
+
     delete kolo;
     delete ui;
 }
@@ -583,8 +584,10 @@ void OknoGlowne::obrotGrafiki(int wylosowanyObrot)
     int obrot=360;
     int licznik=10;
     bool wyjscie=false;
+
     while(licznik>0&&wyjscie==false)
     {
+
         if (licznik==1&&obrot==wylosowanyObrot)
         {
             //wychodzimy gdy osiagniemy wylosowany obort w ostatniej iteracji licznika
@@ -607,14 +610,23 @@ void OknoGlowne::obrotGrafiki(int wylosowanyObrot)
         temp.drawPixmap(0,0,ship);
 
         ui->labelGrafika->setPixmap(rotate);
+
         obrot=obrot-licznik;
+
+        if (obrot%60==0)
+        {
+            dzwiek.ruchKola.play();
+        }
         if (obrot<0)
         {
+
             obrot=360;
             licznik--;
         }
         temp.end();
+
     }
+    dzwiek.wylosowano.play();
     zmianaTury(1);
 
 }

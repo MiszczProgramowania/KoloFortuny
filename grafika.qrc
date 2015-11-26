@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>img/kolo.jpg</file>
+        <file>img/icon.png</file>
+        <file>sound/error.wav</file>
+        <file>sound/tik.wav</file>
+        <file>sound/wylosowane.wav</file>
     </qresource>
 </RCC>
