@@ -122,7 +122,6 @@ void OknoGlowne::on_actionNowa_triggered()
                 informacja
                 );
 
-
     ui->TablicaLiter->clear();
     ui->TablicaLiter->setRowCount(0);
 
@@ -148,13 +147,13 @@ void OknoGlowne::on_actionNowa_triggered()
     QMessageBox msgBox;
     msgBox.setText("Nowa Gra!");
     msgBox.setInformativeText("W ilu graczy?");
-    msgBox.setStandardButtons(QMessageBox::Save |QMessageBox::Open| QMessageBox::Cancel);
+    msgBox.setStandardButtons(QMessageBox::Save |QMessageBox::Open| QMessageBox::No|QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.button(QMessageBox::Save)->setText("Jeden");
     msgBox.button(QMessageBox::Open)->setText("Dwóch");
-    msgBox.button(QMessageBox::Cancel)->setText("Czterch");
-
+    msgBox.button(QMessageBox::No)->setText("Czterch");
+    msgBox.button(QMessageBox::Cancel)->setText("Anuluj");
     int ret = msgBox.exec();
     qDebug() << "ret wynosi: " << ret;
     if(ret==2048)
@@ -164,7 +163,7 @@ void OknoGlowne::on_actionNowa_triggered()
         QString temp= QInputDialog::getText(this,"Nazwa użytkownika nr 1", "Gracz nr 1:");
         kolo->listaGraczy[0].ustawNazwe(temp);
         qDebug()<<"Tworzymy KOLO END";
-        zmianaTury();
+        zmianaTury(1);
          return;
     }
     if (ret==8192)
@@ -181,10 +180,10 @@ void OknoGlowne::on_actionNowa_triggered()
         while(temp==temp2);
         kolo->listaGraczy[1].ustawNazwe(temp2);
         qDebug()<<"Tworzymy KOLO END";
-        zmianaTury();
+        zmianaTury(1);
         return;
      }
-    if(ret==4194304)
+    if(ret==65536)
     {
         qDebug()<<"Tworzymy KOLO";
         kolo = new KoloLosu(4);
@@ -203,13 +202,14 @@ void OknoGlowne::on_actionNowa_triggered()
         }
         while(temp3==temp||temp3==temp2);
         kolo->listaGraczy[2].ustawNazwe(temp3);
-        do{
+        do
+        {
             temp4= QInputDialog::getText(this,"Nazwa użytkownika nr 4", "Gracz nr 4:");
         }
         while(temp4==temp||temp4==temp2||temp4==temp3);
         kolo->listaGraczy[3].ustawNazwe(temp4);
         qDebug()<<"Tworzymy KOLO END";
-        zmianaTury();
+        zmianaTury(1);
         return;
     }
     else
@@ -407,13 +407,26 @@ void OknoGlowne::on_wybierzLitere_released()
 void OknoGlowne::zmianaTury()
 {
     qDebug()<<"[void OknoGlowne::zmianaTury()]";
-    kolo->tura=kolo->tura+1;
+    if (kolo->tura > 0)
+    {
+        kolo->tura=kolo->tura+1;
+        if (kolo->tura >= kolo->nazwaTury.length())
+            kolo->tura=1;
+        aktualizacjaElementowUi();
+    }
+    else if (kolo->tura==0)
+    {
+        qDebug()<<"Tura w trakcie przetwarzania./n Poczekaj na zmianę tury!";
+    }
+    qDebug()<<"[void OknoGlowne::zmianaTury()--END]";
+}
+void OknoGlowne::zmianaTury(int x)
+{
+    kolo->tura=x;
     if (kolo->tura >= kolo->nazwaTury.length())
         kolo->tura=1;
     aktualizacjaElementowUi();
-    qDebug()<<"[void OknoGlowne::zmianaTury()--END]";
 }
-
 int OknoGlowne::szukajLiter(QString temp,QChar szukana)
 {
     qDebug()<<"[void OknoGlowne::szukajLiter(QString temp,QChar szukana)]";
@@ -504,6 +517,7 @@ void OknoGlowne::on_buttonLosuj_released()
     kolo->losowaniePozycji();
     OknoGlowne::obrotGrafiki(30*kolo->wylosowanaPozycja+15);
     ui->labelWylosowano->setText("Wylosowano na kole: " + kolo->nagrody.at(kolo->wylosowanaPozycja));
+
     czyTraciKolejke();
     zmianaTury();
     }
@@ -520,26 +534,36 @@ void OknoGlowne::on_buttonLosuj_released()
 
 void OknoGlowne::on_lineEditZgadnij_returnPressed()
 {
-    QString temp = plik_hasel.baza.slowa.at(plik_hasel.nrPartii);
-    qDebug()<<"Hasło do zgadnięcia to: "<<temp;
-    QString strzal=ui->lineEditZgadnij->text();
-    if (strzal.isNull()||strzal.isEmpty())
+    if (kolo->tura==2)
     {
-        ui->lineEditZgadnij->clear();
-        return;
+        QString temp = plik_hasel.baza.slowa.at(plik_hasel.nrPartii);
+        qDebug()<<"Hasło do zgadnięcia to: "<<temp;
+        QString strzal=ui->lineEditZgadnij->text();
+        if (strzal.isNull()||strzal.isEmpty())
+        {
+            ui->lineEditZgadnij->clear();
+            return;
+        }
+        temp=temp.toUpper();
+        strzal=strzal.toUpper();
+        if (temp!=strzal)
+        {
+            kolo->aktualnyZawodnik->ustawPunkty(0);
+            ui->labelPunkty->setText(0);
+            QMessageBox::information(
+                this,tr("ZŁY STRZAŁ!"),tr("Tym razem ci się nie udało kasujemy punkty!!"));
+            ui->lineEditZgadnij->clear();
+            return;
+        }
+        wygranaRozgrywka();
     }
-    temp=temp.toUpper();
-    strzal=strzal.toUpper();
-    if (temp!=strzal)
+    else
     {
-        kolo->aktualnyZawodnik->ustawPunkty(0);
-        ui->labelPunkty->setText(0);
-        QMessageBox::information(
-            this,tr("ZŁY STRZAŁ!"),tr("Tym razem ci się nie udało kasujemy punkty!!"));
-        ui->lineEditZgadnij->clear();
-        return;
+        QMessageBox::warning(this, tr("Zła tura"),
+                                       tr("Wykonałeś akcje nie przewidzianą w tej turze.\n"));
+        qDebug()<<"Jest teraz inna tura o nazwie: "<<kolo->nazwaTury.at(kolo->tura);
+        qDebug()<<"Najpierw ją ukończ";
     }
-    wygranaRozgrywka();
 }
 void OknoGlowne::wygranaRozgrywka()
 {
@@ -555,6 +579,7 @@ void OknoGlowne::wygranaRozgrywka()
 }
 void OknoGlowne::obrotGrafiki(int wylosowanyObrot)
 {
+    zmianaTury(0);
     int obrot=360;
     int licznik=10;
     bool wyjscie=false;
@@ -590,6 +615,7 @@ void OknoGlowne::obrotGrafiki(int wylosowanyObrot)
         }
         temp.end();
     }
+    zmianaTury(1);
 
 }
 

@@ -8,12 +8,12 @@ private:
 
 public:
     KontrolerDzwieku();
-    QSoundEffect ruchKola;
-    QSoundEffect wygrana;
-    QSoundEffect dialog;
-    QSoundEffect nowaGra;
-    QSoundEffect blad;
-    QSoundEffect wylosowano;
+//    QSoundEffect ruchKola;
+//    QSoundEffect wygrana;
+//    QSoundEffect dialog;
+//    QSoundEffect nowaGra;
+//    QSoundEffect blad;
+//    QSoundEffect wylosowano;
 };
 
 #endif // KONTROLERDZWIEKU_H

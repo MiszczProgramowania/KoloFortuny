@@ -45,6 +45,7 @@ public:
     void najpierwZaczytajBaze();
     void najpierwUruchomGre();
     void zmianaTury();
+    void zmianaTury(int x);
     void zmianaGracza();
     bool czyTraciKolejke();
     void uwzglednijWygrana(int liczbaWystapien);
